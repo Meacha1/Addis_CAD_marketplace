@@ -93,7 +93,7 @@ function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated }) {
       const userInfo = await getUserInfoById(id);
       setUser((prevUser) => ({
         ...prevUser,
-        [id]: userInfo?.username,
+        [id]: userInfo?.first_name,
       }));
       setIsAdmin((prevIsAdmin) => ({
         ...prevIsAdmin,
@@ -133,7 +133,11 @@ function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated }) {
               <div className='info1'>
                 <h4 className='card-title'>{file.title}</h4>
                 <p className='card-text'>{file.description}</p>
-                <p className='card-text'>Owner: {user && user[file.owner]}</p>
+                <p className="card-text">
+                  Owner: {user && (
+                    <Link to={`/owners_profile_for_public/${file.owner}`}>{user[file.owner]}</Link>
+                  )}
+                </p>
                 {review[file.id] && (
                   <div className='star-rating-container'>
                     <StarRating rating={review[file.id].average_rating} />

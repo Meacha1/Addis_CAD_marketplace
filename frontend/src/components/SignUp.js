@@ -8,7 +8,8 @@ import axios from 'axios';
 const Signup = ({ signup, isAuthenticated }) => {
     const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
-        username: '',
+        first_name: '',
+        last_name: '',
         email: '',
         phone_number: '',
         password: '',
@@ -16,7 +17,7 @@ const Signup = ({ signup, isAuthenticated }) => {
         user_type: 'user', // Default user type, you can change this as needed
     });
 
-    const { username, email, phone_number, password, re_password, user_type } = formData;
+    const { first_name, last_name, email, phone_number, password, re_password, user_type } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
     
@@ -24,7 +25,7 @@ const Signup = ({ signup, isAuthenticated }) => {
         e.preventDefault();
 
         if (password === re_password) {
-            signup(username, email, phone_number, password, re_password, user_type);
+            signup(first_name, last_name, email, phone_number, password, re_password, user_type);
             setAccountCreated(true);
         }
     };
@@ -70,9 +71,20 @@ const Signup = ({ signup, isAuthenticated }) => {
             <input
               className="form-control"
               type="text"
-              placeholder="User Name*"
-              name="username"
-              value={username}
+              placeholder="First Name*"
+              name="first_name"
+              value={first_name}
+              onChange={(e) => onChange(e)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <input
+              className="form-control"
+              type="text"
+              placeholder="Last Name*"
+              name="last_name"
+              value={last_name}
               onChange={(e) => onChange(e)}
               required
             />

@@ -12,6 +12,7 @@ import UserPage from './pages/UserPage';
 import BeVipPage from './pages/BeVipPage'
 import BuyFilePage from './pages/BuyFilePage';
 import ResetPasseordConfirm from './pages/ResetPasseordConfirmPage';
+import OwnersProfileForPublic from './pages/OwnersProfileForPublic';
 import ResetPassword from './pages/ResetPasswordPage';
 import Activate from './pages/ActivatePage';
 import { Provider } from 'react-redux';
@@ -37,6 +38,7 @@ function App() {
             <Route path='/user_file/:fileId' element={<UserFilePage />} />
             <Route path='/be_vip' element={<BeVipPage />} />
             <Route path='/buy/:fileId' element={<BuyFilePage />} />
+            <Route path='/owners_profile_for_public/:ownerId' element={<OwnersProfileForPublic />} />
             
           </Routes>
         </div>

@@ -130,7 +130,7 @@ WSGI_APPLICATION = 'cad_market.wsgi.application'
 DATABASES = {
        'default': {
            'ENGINE': 'django.db.backends.mysql',
-           'NAME': 'userdb1',
+           'NAME': 'userdb2',
            'USER': 'root',
            'PASSWORD': 'password',
            'HOST': 'localhost',
@@ -198,7 +198,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'files')
 MEDIA_URL = '/files/'
 
 
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build/static')
 ]

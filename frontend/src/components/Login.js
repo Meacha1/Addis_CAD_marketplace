@@ -52,7 +52,9 @@ const Login = ({ login, isAuthenticated, user }) => {
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, {
                 headers: {
-                    Authorization: `JWT ${localStorage.getItem('access')}`
+                    'Content-Type': 'application/json',
+                    'Authorization': `JWT ${localStorage.getItem('access')}`,
+                    'Accept': 'application/json'
                 }
             });
 
@@ -62,7 +64,7 @@ const Login = ({ login, isAuthenticated, user }) => {
         }
     };
 
-    if (isAuthenticated) {
+    if (isAuthenticated && userid !== null) {
         navigate(`/user/${userid}`);
     }
 

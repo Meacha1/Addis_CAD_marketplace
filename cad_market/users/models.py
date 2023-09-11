@@ -3,9 +3,11 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 import uuid
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password, phone_number, user_type):
-        if not username:
-            raise ValueError("Users must have a username")
+    def create_user(self, first_name, last_name, email, password, phone_number, user_type, **extra_fields):
+        if not first_name:
+            raise ValueError("Users must have a first name")
+        if not last_name:
+            raise ValueError("Users must have a last name")
         if not email:
             raise ValueError("Users must have an email address")
         if not password:
@@ -16,7 +18,8 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
 
         user = self.model(
-            username=username,
+            first_name=first_name,
+            last_name=last_name,
             email=email,
             phone_number=phone_number,
             user_type=user_type  # New field
@@ -26,9 +29,10 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, email, password, phone_number):
+    def create_superuser(self, first_name, last_name, email, password, phone_number):
         user = self.create_user(
-            username=username,
+            first_name==first_name,
+            last_name=last_name,
             email=email,
             password=password,
             phone_number=phone_number,
@@ -41,7 +45,8 @@ class UserManager(BaseUserManager):
 
 class UserCreate(AbstractBaseUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    username = models.CharField(max_length=50, unique=True)
+    first_name = models.CharField(max_length=50, unique=True)
+    last_name = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
@@ -59,12 +64,12 @@ class UserCreate(AbstractBaseUser):
     is_vip = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'password', 'phone_number', 'user_type']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'password', 'phone_number', 'user_type']
 
     objects = UserManager()
 
     def __str__(self):
-        return self.username
+        return self.email
 
     def has_perm(self, perm, obj=None):
         return self.is_superuser
@@ -73,7 +78,7 @@ class UserCreate(AbstractBaseUser):
         return self.is_superuser
     
     def get_short_name(self):
-        return self.username
+        return self.first_name
     
     def get_full_name(self):
-        return self.username
+        return self.first_name + " " + self.last_name
