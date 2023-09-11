@@ -1,0 +1,72 @@
+/* UserPage.css */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.description {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.description h1 {
+  font-size: 36px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-input input[type="text"],
+.search-category select,
+.search-button button {
+  margin: 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.search-input input[type="text"] {
+  flex-grow: 1; /* Allow input to grow to take available space */
+  max-width: 500px;
+  min-width: 550px;
+}
+
+.search-category select {
+  flex-shrink: 0; /* Prevent select from shrinking */
+  background-color: #333;
+  color: #ccc;
+}
+
+#root > div > div.home-container > main > div > div:nth-child(3) > button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 12px 20px;
+}
+
+#root > div > div.home-container > main > div > div:nth-child(3) > button:hover {
+  background-color: #0056b3;
+}
+
+.nav-container {
+  color: #fff;
+  padding: 10px 0;
+  align-items: end;
+}
+
+#root > div > div.nav-container > nav > div {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+#root > div > div.nav-container > nav > div > button > i {
+  padding: 5;
+}

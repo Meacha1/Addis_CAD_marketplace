@@ -1,0 +1,145 @@
+/* BeVip.css */
+.container {
+    text-align: center;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    max-width: 800px;
+  }
+  
+  .upgrade-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #007bff; /* Blue color for the title */
+  }
+  
+  .membership-options {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .free,
+  .vip {
+    width: 45%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9; /* Light gray background */
+  }
+
+  .free-header,
+  .vip-header {
+    background-color: #777;
+    margin-bottom: 10px;
+    padding: 3px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333; /* Dark text color for headings */
+  }
+  
+  ul {
+    padding: 2px;
+    list-style: none;
+  }
+
+  .free ul {
+    padding: 2px;
+    text-align: left;
+    list-style:inside;
+  }
+
+  .vip ul {
+    padding: 2px;
+    text-align: left;
+    list-style:inside;
+  }
+  
+  ul li {
+    margin: 5px 0;
+    padding: 2px;
+    color: #555;
+  }
+  
+  button.upgrade-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button.upgrade-button:hover {
+    background-color: #0056b3; /* Slightly darker blue on hover */
+  }
+  
+  .payment-options {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .payment-info {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #777; /* Gray text color for payment info */
+  }
+  
+  .payment-method {
+    display: inline-block;
+    margin: 10px;
+  }
+  
+  .payment-method img {
+    width: 120px;
+    height: 80px;
+    cursor: pointer;
+    border: 1px solid #b6b4b4;
+  }
+  
+  #transaction-form {
+    text-align: center;
+  }
+  
+  label {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 5px;
+    color: #333; /* Dark text color for labels */
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3; /* Slightly darker blue on hover */
+  }
+  
+  #root > div > div.container > div.payment-options > ul {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }

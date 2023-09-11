@@ -1,0 +1,86 @@
+/* Styles for the AboutUs component */
+.aboutUs {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .aboutUs h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .aboutUs p {
+    font-size: 1.1rem;
+    text-align: left;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .aboutUs a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .aboutUs a:hover {
+    color: #0056b3;
+  }
+  
+  /* Styles for the profile cards */
+  .cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+  
+  .profile-card {
+    background-color: #f5f5f5;
+    border: 1px solid #2247be;
+    margin: 15px;
+    padding: 20px;
+    width: 300px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
+  
+  .profile-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .profile-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .profile-card ul {
+    padding: 0;
+    margin: 20px 0 10px 30%;
+    list-style:disc;
+    text-align: left;
+  }
+  
+  .profile-card li {
+    margin-bottom: 5px;
+
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .profile-card {
+      width: 100%;
+    }
+  }
+  

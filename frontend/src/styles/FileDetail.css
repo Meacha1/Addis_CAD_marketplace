@@ -1,0 +1,138 @@
+.file-details {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  max-width: 700px;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  text-align: left;
+}
+
+.file-img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.download-button {
+  align-self: center;
+  width: fit-content;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+file-details > h2 {
+  justify-self: start;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+/* Add this CSS to your stylesheets or a separate CSS file */
+
+.review-section {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.review-section h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.review-section textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.review-section label {
+  font-weight: bold;
+}
+
+.review-section select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.review-section .submit-review-button {
+  display: block;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.review-section .submit-review-button:hover {
+  background-color: #0056b3;
+}
+
+
+.star-filled {
+  color: #ffa600; /* Filled star color (e.g., yellow) */
+  cursor: pointer;
+}
+
+.star-empty {
+  color: #ccc; /* Empty star color (e.g., gray) */
+  cursor: pointer;
+}
+
+
+.star-rating-container {
+  margin-top: 10px;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.download-button, .submit-review-button {
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.review-list {
+  margin-top: 20px;
+}
+
+.review-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.review-comment {
+  font-size: 14px;
+}
+
+.review-user-name {
+  font-size: 12px;
+  font-style: italic;
+}

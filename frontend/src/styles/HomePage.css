@@ -1,0 +1,106 @@
+/* Reset some default styles */
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Quicksand:wght@300&display=swap");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Montserrat, Quicksand;
+  }
+  
+  /* Basic styling for the entire page */
+  .home-container {
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+    padding: 30px;
+  }
+  
+  /* Main content styling */
+  .description {
+    margin-bottom: 30px;
+  }
+  
+  .description h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  .why {
+    margin: 0 auto;
+    width: 1100px;
+    align-self: center;
+    background-color: antiquewhite;
+    border-radius: 5px;
+    margin-bottom: 60px;
+  }
+
+  #root > div > div.home-container > main > section.description > div > img {
+    width: 25%;
+    object-fit: cover;
+  }
+  
+  .user-groups {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .why-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .why-text h2 {
+    font-size: 60px;
+    font-weight: normal;
+  }
+
+  .part1 {
+    color: rgb(24, 42, 122);
+  }
+  .part2 {
+    padding-left: 15px;
+    color: black;
+  }
+
+  .question-mark {
+    margin-top: 0;
+    height: 100px;
+    padding-bottom: 10px;
+  }
+
+  #root > div > div.home-container > main > section.description > h4 {
+    font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 20px;
+  }
+
+  .hero {
+    width: 100%;
+    margin: 10px;
+  }
+  
+  .user-group {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #2247be;
+    border-radius: 4px;
+    margin: 0 10px;
+  }
+  
+  .user-group h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  /* Responsive adjustments */
+  @media screen and (max-width: 768px) {
+    .user-groups {
+      flex-direction: column;
+    }
+  
+    .user-group {
+      margin: 10px 0;
+    }
+  }
+  

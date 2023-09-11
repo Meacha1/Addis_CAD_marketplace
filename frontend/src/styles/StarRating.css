@@ -1,0 +1,20 @@
+.star {
+    color: rgb(255, 174, 0);
+    font-size: 24px; /* Adjust the font size as needed */
+  }
+  
+  /* Define styles for filled stars */
+  .star.filled {
+    color: rgb(255, 174, 0);
+  }
+  
+  /* Define styles for half stars */
+  .star.half {
+    color: rgb(255, 174, 0);
+  }
+  
+  /* Define styles for empty stars */
+  .star.empty {
+    color: #ccc; /* You can use a different color for empty stars */
+  }
+  

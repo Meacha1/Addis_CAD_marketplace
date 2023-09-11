@@ -1,0 +1,11 @@
+.buy-button {
+    align-self: center;
+    width: fit-content;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #036814;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

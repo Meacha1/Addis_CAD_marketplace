@@ -1,0 +1,92 @@
+/* Navigation.css */
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  
+}
+
+#root > div > div.nav-container {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+}
+
+#root > div > div.nav-container > span{
+  color: #333;
+}
+
+.navbar-toggler {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.navbar-toggler-icon {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background-color: #333;
+  transition: transform 0.3s ease;
+}
+
+.navbar-toggler.open .navbar-toggler-icon {
+  transform: rotate(45deg);
+}
+
+.navbar-collapse {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 200px; /* Adjust the width as needed */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: none;
+  flex-direction: column; /* Display dropdown items in a column */
+}
+
+.navbar-toggler.open + .navbar-collapse {
+  display: flex;
+}
+
+.navbar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  display: block;
+  text-align: left;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: #f0f0f0;
+}
+
+.user-profile {
+  text-align: left;
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.user-profile:hover {
+  background-color: #f0f0f0;
+}

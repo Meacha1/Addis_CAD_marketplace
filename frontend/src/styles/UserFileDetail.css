@@ -1,0 +1,40 @@
+.file-details {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    max-width: 700px;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    text-align: left;
+  }
+  
+  .file-img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  .download-button {
+    align-self: center;
+    width: fit-content;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  file-details > h2 {
+    justify-self: start;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-around;
+  }
+  
