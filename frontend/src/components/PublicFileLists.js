@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import '../styles/FileList.css';
 import { Link, useParams } from 'react-router-dom';
 import { getUserInfoById } from '../utils/getUserInfo';
+import { connect } from 'react-redux';
 import StarRating from './StarRating';
 import axios from 'axios';
 
-export default function PublicFileLists({ searchQuery, selectedCategory }) {
+function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated }) {
   const [files, setFiles] = useState([]);
   const [isAdmin, setIsAdmin] = useState({});
   const [user, setUser] = useState({}); // To store user info
@@ -184,3 +185,9 @@ export default function PublicFileLists({ searchQuery, selectedCategory }) {
     </div>
   );
 }
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(PublicFileLists);

@@ -44,7 +44,8 @@ export default function ProfessionalFileLists({ owner }) {
 
   return (
     <div>
-      <p>File List</p>
+      {files.length !==0 && <p>File List</p>}
+      {files.length === 0 && <p>You haven't uploaded any files yet. Click the 'Upload File' button to get started</p>}
       <div className='files_list'>
         <div className='card-group'>
           {files.length > 0 &&

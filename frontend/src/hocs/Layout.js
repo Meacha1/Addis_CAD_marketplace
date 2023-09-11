@@ -3,10 +3,10 @@ import Header from '../components/Header';
 import { connect } from 'react-redux';
 import { checkAuthenticated, load_user } from '../actions/auth';
 
-const Layout = ({ checkAuthenticated, load_user, children }) => {
+const Layout = (props) => {
     useEffect(() => {
-        checkAuthenticated();
-        load_user();
+        props.firstcheckAuthenticated();
+        props.load_user();
     }, []);
 
     return (

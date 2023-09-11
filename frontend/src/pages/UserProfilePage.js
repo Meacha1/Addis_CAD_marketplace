@@ -1,6 +1,7 @@
 import { getUserInfoById } from '../utils/getUserInfo';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Navigation from '../components/Navigation';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ProfessionalFileLists from '../components/ProfessionalFileLists';
@@ -29,6 +30,7 @@ const UserProfilePage = () => {
   return (
     <>
       <Header username={user?.username} is_active={true} owner={owner} />
+      <Navigation userId={id} />
       <div className="user-profile"> 
         <div className="user-profile-content">
           <div className="user-info">

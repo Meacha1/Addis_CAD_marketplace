@@ -60,7 +60,7 @@ const Login = ({ login, isAuthenticated, user }) => {
         } catch (err) {
             console.log(err);
         }
-    };;
+    };
 
     if (isAuthenticated) {
         navigate(`/user/${userid}`);

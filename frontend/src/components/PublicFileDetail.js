@@ -67,8 +67,6 @@ const PublicFileDetail = ({ files }) => {
         const userInfo = await getUserInfoById(currentUserId);
         if (userInfo) {
           setIsVip(userInfo?.is_vip);
-          console.log(userInfo);
-          console.log(userInfo?.is_vip);
         }
       } catch (error) {
         console.log(error);
@@ -146,6 +144,13 @@ const PublicFileDetail = ({ files }) => {
 
     // Check if the user has already submitted a review for this file
     const hasSubmittedReview = review.some((reviewItem) => reviewItem.user === currentUserId);
+
+    // Check if the file is itself 
+    if (currentUserId === file.owner) {
+      alert('You cannot review your own file.');
+      return;
+    }
+
 
     if (hasSubmittedReview) {
       // Prevent users from submitting multiple reviews

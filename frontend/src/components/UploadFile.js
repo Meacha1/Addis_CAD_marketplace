@@ -3,10 +3,12 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import '../styles/UploadFile.css';
 import axios from 'axios';
+import { useEffect } from 'react';
+import { getUserInfoById } from '../utils/getUserInfo';
 
 function UploadFile() {
   const owner = useParams().userId;
-  console.log('The Owner is:', owner);
+  const [user_type, setUserType] = useState('');
 
   const [formData, setFormData] = useState({
     title: '',
@@ -15,7 +17,20 @@ function UploadFile() {
     file: null,
     price: '',
     owner: owner,
+    is_premium: false,
   });
+
+  const fetchUserInfo = async (id) => {
+    try {
+      const userInfo = await getUserInfoById(id);
+      setUserType(userInfo.user_type);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  fetchUserInfo(owner);
+
+  console.log(`user_type: ${user_type}`);
 
   const navigate = useNavigate();
 
@@ -95,10 +110,20 @@ function UploadFile() {
         <input
           type="number"
           name="price"
-          value={formData.price}
+          value={user_type !== 'admin' ? formData.price : 0}
           onChange={handleChange}
           placeholder="Price in Birr"
         />
+        {user_type === 'admin' && 
+        <select
+            name="is_premium"
+            value={formData.is_premium}
+            onChange={handleChange}
+          >
+            <option value={true}>Premium</option>
+            <option value={false}>Free</option>
+          </select>
+        }
 
         <input
           type="file"
