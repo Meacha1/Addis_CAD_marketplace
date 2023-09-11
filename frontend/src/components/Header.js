@@ -7,8 +7,8 @@ import { logout } from '../actions/auth';
 export default function Header({ is_active , username }) {
   const navigate = useNavigate();
 
-  const logingout = () => {
-    logout();
+  const logingout = async(e) => {
+    await logout();
     navigate('/');
   }
 

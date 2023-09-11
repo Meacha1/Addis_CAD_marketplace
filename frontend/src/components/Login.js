@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { login } from '../actions/auth';
 import axios from 'axios';
 import '../styles/Login.css'
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, user }) => {
     const [userid, setUserid] = useState('');
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -19,11 +20,11 @@ const Login = ({ login, isAuthenticated }) => {
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const onSubmit = e => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         login(email, password);
-        // After successful login, call getUserInfo to fetch user information
+    
         getUserInfo();
     };
 
@@ -60,7 +61,6 @@ const Login = ({ login, isAuthenticated }) => {
             console.log(err);
         }
     };;
-
 
     if (isAuthenticated) {
         navigate(`/user/${userid}`);
@@ -113,6 +113,7 @@ const Login = ({ login, isAuthenticated }) => {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { login })(Login);
