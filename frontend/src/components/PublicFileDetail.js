@@ -97,7 +97,7 @@ const PublicFileDetail = ({ files }) => {
   const getUserNameById = async (userId) => {
     try {
       const userInfo = await getUserInfoById(userId);
-      return userInfo?.username || '';
+      return userInfo?.first_name || '';
     } catch (error) {
       console.error(error);
       return ''; // Return an empty string if user info is not available

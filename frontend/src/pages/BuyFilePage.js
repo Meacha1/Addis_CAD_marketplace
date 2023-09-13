@@ -16,7 +16,11 @@ function BuyFilePage() {
   useEffect(() => {
     const fetchFile = async () => {
       try {
-        const response = await fetch(`/api/FileDetail/${fileId}/`);
+        const response = await fetch(`/api/FileDetail/${fileId}/`, {
+          headers: {
+            Authorization: `JWT ${localStorage.getItem('access')}`,
+          },
+        });
         const data = await response.json();
         setFile(data);
       } catch (error) {
@@ -57,7 +61,6 @@ function BuyFilePage() {
       <Header is_active={true}/>
       <div className="main-container">
         <div className='detail'>
-          <h1 className="buy-file-title">Buy File</h1>
           <div className="file-details">
             <img src={`${file?.file}`} alt={`${file?.title}`} className='file-img' />
             <h2>{file?.title}</h2>

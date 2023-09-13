@@ -5,12 +5,13 @@ import { useLocation } from 'react-router-dom';
 import StarRating from './StarRating';
 import axios from 'axios';
 
-export default function OwnerFileListForPublic({ owner }) {
+export default function OwnerFileListForPublic({ owner, onFilesCountChange, onAverage_rating }) {
   const [files, setFiles] = useState([]);
   const location = useLocation();
+  const { isAdmin } = location.state;
   const ownerId = owner;
-  const { currentUserId } = location.state;
-  console.log(`currentUserId: ${currentUserId}`);
+  let { currentUserId } = location.state;
+  currentUserId = currentUserId.userId;
 
   useEffect(() => {
     if (ownerId) {
@@ -32,6 +33,15 @@ export default function OwnerFileListForPublic({ owner }) {
     }
   };
 
+  const NumberOfFilesUploaded = files.length;
+  onFilesCountChange(NumberOfFilesUploaded);
+
+  let average_rating = files.reduce((total, file) => total + file.average_rating, 0) / files.length;
+  // make it 2 decimal places
+  average_rating = average_rating.toFixed(2);
+  onAverage_rating(average_rating);
+
+
   return (
     <div>
       {files.length !==0 && <p>File List</p>}
@@ -41,9 +51,9 @@ export default function OwnerFileListForPublic({ owner }) {
             files.map((file) => (
               <div key={file.id} className='card-item'>
                 <div className='card-image'>
-                  <Link to={`/file/${file.id}`} className='file-link'>
-                    <img src={`${file.file}`} alt={`${file.title}`} className='card-img' />
-                  </Link>
+                <Link to={`/user_file/${file.id}`} state={{ currentUserId: currentUserId, isAdmin: isAdmin[file.owner] }} className='file-link'>
+                <img src={`${file.file}`} alt={`${file.title}`} className='card-img' />
+                </Link>
                 </div>
                 <div className='card-body'>
                   <div className='info1'>

@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/StarRating.css';
 
 function StarRating({ rating }) {
-  const maxStars = 6; // Maximum number of stars
+  const maxStars = 5; // Maximum number of stars
   const filledStars = Math.floor(rating); // Number of filled stars
   const hasHalfStar = rating % 1 !== 0; // Check if there is a half star
   const emptyStars = maxStars - filledStars - (hasHalfStar ? 1 : 0); // Number of empty stars
