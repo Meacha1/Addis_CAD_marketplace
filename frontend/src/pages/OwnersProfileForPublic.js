@@ -4,41 +4,52 @@ import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import ProfessionalFileLists from '../components/ProfessionalFileLists';
-import UserInfo from '../components/UserInfo';
+import OwnerFileListForPublic from '../components/OwnerFileListForPublic';
 import '../styles/UserProfile.css';
+import defaultAvatar from '../assets/images/user.png';
 
-const OwnersProfileForPublic = () => {
-  const { id } = useParams();
+
+const UserProfilePage = () => {
+  const { ownerId } = useParams();
+  const [avatarURL, setAvatarURL] = useState(defaultAvatar);
   const [user, setUser] = useState(null);
+
+  console.log(`ownerId: ${ownerId}`)
+
 
   useEffect(() => {
     async function fetchUserInfo() {
       try {
-        const userInfo = await getUserInfoById(id);
+        const userInfo = await getUserInfoById(ownerId);
         setUser(userInfo);
+        setAvatarURL(userInfo.avatar)
       } catch (error) {
         console.log(error);
       }
     }
 
     fetchUserInfo();
-  }, [id]);
+  }, [ownerId]);
 
-  const owner = user?.id; // Define the owner variable
+  const owner = ownerId; // Define the owner variable
+  const ownerName = user?.first_name;
+
 
   return (
     <>
       <Header username={user?.username} is_active={true} owner={owner} />
-      <Navigation userId={id} />
+      <Navigation />
       <div className="user-profile"> 
         <div className="user-profile-content">
-          <div className="user-info">
-            <UserInfo user={user} owner={owner} />
-          </div>
-          <div className="file-list">
-            <ProfessionalFileLists owner={owner} />
-          </div>
+          <div className='profile_container'>
+              <h2>{ownerName}'s Profile</h2>
+              <div className="avatar-container">
+                <img src={avatarURL} alt="avatar" className="avatar" />
+              </div>
+            </div>
+            <div className="file-list">
+              <OwnerFileListForPublic owner={owner} />
+            </div>
         </div>
         <Footer />
       </div>
@@ -46,4 +57,4 @@ const OwnersProfileForPublic = () => {
   );
 };
 
-export default OwnersProfileForPublic;
+export default UserProfilePage;

@@ -4,7 +4,7 @@ from .views import UserRegisterView, UserLoginView, FindUserView, FindUserByEmai
 urlpatterns = [
 
     path('register/', UserRegisterView.as_view(), name='user-register'),
-    #path('login/', UserLoginView.as_view(), name='user-login'),
+    path('login/', UserLoginView.as_view(), name='user-login'),
     path('find/', FindUserView.as_view(), name='user-find'),
     path('find/<str:email>/', FindUserByEmailView.as_view(), name='user-find-by-email'),
     path('findByid/<str:id>/', FindUserByIDView.as_view(), name='user-find-by-id'),

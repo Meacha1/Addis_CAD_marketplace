@@ -7,9 +7,10 @@ export async function loginUser(data) {
   // First check if user exists
   const findUserResponse = await fetch('/users/find/', {
     method: 'POST',
-    headers: {
+    headers: {   
       'Content-Type': 'application/json',
       'X-CSRFToken': csrfToken, // Include the CSRF token in the headers
+      'Authorization': `JWT ${localStorage.getItem('access')}`,
     },
     body: JSON.stringify({ email: data.email }),
   });
@@ -25,6 +26,7 @@ export async function loginUser(data) {
   const loginResponse = await fetch('/users/login/', {
     method: 'POST',
     headers: {
+      Authorization: `JWT ${localStorage.getItem('access')}`,
       'Content-Type': 'application/json',
       'X-CSRFToken': csrfToken, // Include the CSRF token in the headers
     },
@@ -48,6 +50,7 @@ export async function registerUser(data) {
   const response = await fetch('/users/register/', {
     method: 'POST',
     headers: {
+      Authorization: `JWT ${localStorage.getItem('access')}`,
       'Content-Type': 'application/json',
       'X-CSRFToken': csrfToken, // Include the CSRF token in the headers
     },

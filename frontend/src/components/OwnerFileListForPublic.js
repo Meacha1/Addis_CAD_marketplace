@@ -1,26 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/UserFileLists.css';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import StarRating from './StarRating';
 import axios from 'axios';
 
-export default function ProfessionalFileLists({ owner }) {
+export default function OwnerFileListForPublic({ owner }) {
   const [files, setFiles] = useState([]);
+  const location = useLocation();
   const ownerId = owner;
-
-  const pagenation = (data, page, perPage) => {
-    const offset = (page - 1) * perPage;
-    const paginatedItems = data.slice(offset, offset + perPage);
-    const totalPages = Math.ceil(data.length / perPage);
-    return {
-      page,
-      perPage,
-      prePage: page > 1 ? page - 1 : null,
-      nextPage: page < totalPages ? page + 1 : null,
-      total: data.length,
-      totalPages,
-      data: paginatedItems,
-    };
-  };
+  const { currentUserId } = location.state;
+  console.log(`currentUserId: ${currentUserId}`);
 
   useEffect(() => {
     if (ownerId) {
@@ -44,8 +34,7 @@ export default function ProfessionalFileLists({ owner }) {
 
   return (
     <div>
-      {files.length !==0 && <p>Your file List</p>}
-      {files.length === 0 && <p>You haven't uploaded any files yet. Click the 'Upload File' button to get started</p>}
+      {files.length !==0 && <p>File List</p>}
       <div className='files_list'>
         <div className='card-group'>
           {files.length > 0 &&
@@ -60,6 +49,10 @@ export default function ProfessionalFileLists({ owner }) {
                   <div className='info1'>
                     <h4 className='card-title'>{file.title}</h4>
                     <p className='card-text'>{file.description}</p>
+                    <div className='star-rating-container'>
+                        <StarRating rating={file.average_rating} />
+                    </div>
+         
                   </div>
                   <div className='info2'>
                     <p className='card-text'>Price: {file.price}</p>
@@ -67,13 +60,6 @@ export default function ProfessionalFileLists({ owner }) {
                       <p className='card-text'>{file.category}</p>
                     </div>
                   </div>
-                </div>
-                <div className='update'>
-                  <button className='update-button'>
-                    <Link to={{ pathname: `/file/${file.id}/update`}}>
-                      Update
-                    </Link>
-                  </button>
                 </div>
               </div>
             ))}

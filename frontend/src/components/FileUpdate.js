@@ -84,7 +84,7 @@ function FileUpdate() {
       console.log(error)
     }
 
-    navigate(`/profile/${formData.owner}`);
+    navigate(`/profile/${formData?.owner}`);
   };
 
   return (

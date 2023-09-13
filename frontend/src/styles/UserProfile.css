@@ -5,6 +5,11 @@
     gap: 40px;
     margin-top: 20px;
 }
+
+.user-profile {
+  display: flex;
+  flex-direction: row;
+}
 .user-info {
     text-align: center;
     min-width: 18%;
@@ -91,4 +96,36 @@ input[type="file"]::-webkit-file-upload-button {
 
 .avatar-container:hover .avatar {
   filter: brightness(0.2) invert(0.2);
+}
+
+.profile_container {
+  display: flex;
+  flex-direction: column;
+  max-width: 30%;
+  min-width: 22%;
+  border: 1px solid #ccc;
+  background-color: #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-left: 5px;
+  align-items: center;
+}
+
+#root > div.App > div.user-profile > div > div.profile_container > div > img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+#root > div.App > div.user-profile > div > div.file-list > div > p {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+div.profile_container > h2 {
+  margin-bottom: 10px;
 }

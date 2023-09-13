@@ -17,6 +17,7 @@ import ResetPassword from './pages/ResetPasswordPage';
 import Activate from './pages/ActivatePage';
 import { Provider } from 'react-redux';
 import store from './store';
+import PrivateRoutes from './utils/privatRoutes'
 
 function App() {
   return (

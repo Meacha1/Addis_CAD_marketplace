@@ -49,7 +49,7 @@ const UserInfo = ({ user, owner }) => {
           </label>
         </div>
       </div>
-      <h3>Hello, {user?.username}</h3>
+      <h3>Hello, {user?.first_name}</h3>
       <button className="upload">
         <Link
           to={{ pathname: `/uploadFile/${owner}`, state: { is_active: true } }}

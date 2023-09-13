@@ -135,7 +135,9 @@ function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated }) {
                 <p className='card-text'>{file.description}</p>
                 <p className="card-text">
                   Owner: {user && (
-                    <Link to={`/owners_profile_for_public/${file.owner}`}>{user[file.owner]}</Link>
+                    <Link to={`/owners_profile_for_public/${file.owner}`} state={{ currentUserId: currentUserId }}>
+                      {user[file.owner]}
+                    </Link>
                   )}
                 </p>
                 {review[file.id] && (
