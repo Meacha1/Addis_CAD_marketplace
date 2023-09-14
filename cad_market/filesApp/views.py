@@ -11,11 +11,11 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 import re, json
 from django.db.models import Avg
+from django.db import transaction
 from decimal import Decimal
 from datetime import datetime, timedelta
-import io
-from PIL import Image
-from django.core.files.uploadedfile import SimpleUploadedFile
+
+
 
 
 class FileListView(generics.ListCreateAPIView):
@@ -36,7 +36,7 @@ class UserFileListView(generics.ListAPIView):
 class FileUploadView(generics.CreateAPIView):
     queryset = File.objects.all()
     serializer_class = FileSerializer
-    parser_classes = (MultiPartParser,)  # Enable multi-part form data parsing
+    parser_classes = (MultiPartParser,)
 
     def perform_create(self, serializer):
         parent_file = serializer.save()

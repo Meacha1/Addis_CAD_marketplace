@@ -45,37 +45,42 @@ function UploadFile() {
   const handleFileChange = (e) => {
     if (e.target.name === 'file') {
       // Handle the parent file
+      const selectedFile = e.target.files[0];
+      console.log('Selected parent file:', selectedFile);
       setFormData({
         ...formData,
-        file: e.target.files[0], // Assign the selected file to the 'file' field
+        file: selectedFile, // Assign the selected file to the 'file' field
       });
     } else if (e.target.name === 'attached_files') {
       // Handle attached files
+      const attachedFiles = Array.from(e.target.files); // Convert FileList to an array
+      console.log('Selected attached files:', attachedFiles);
       setFormData({
         ...formData,
-        attached_files: [...formData.attached_files, ...e.target.files], // Append to the attached_files array
+        attached_files: attachedFiles, // Assign the array of selected files to attached_files
       });
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    
     const formPayload = new FormData();
+    formPayload.append('title', formData.title);
+    formPayload.append('description', formData.description);
+    formPayload.append('category', formData.category);
+    formPayload.append('file', formData.file);
+    formPayload.append('price', formData.price);
+    formPayload.append('owner', formData.owner);
+    formPayload.append('is_premium', formData.is_premium);
   
-    Object.entries(formData).forEach(([key, value]) => {
-      if (key === 'attached_files') {
-        // Append each attached file to the form payload as an array
-        formData.attached_files.forEach((file, index) => {
-          formPayload.append(`attached_files[${index}]`, file);
-        });
-      } else {
-        formPayload.append(key, value);
-      }
+    // Append attached files
+    formData.attached_files.forEach((file) => {
+      formPayload.append('attached_files', file);
     });
   
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/UploadFile/${owner}/`, formPayload, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/UploadFile/${owner}/`, formPayload, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `JWT ${localStorage.getItem('access')}`,
@@ -86,10 +91,17 @@ function UploadFile() {
           setUploadProgress(percentCompleted); // Update the upload progress state
         },
       });
-      console.log('File uploaded successfully!');
-      navigate(`/profile/${owner}`);
+  
+      if (response.status === 201) {
+        console.log('File uploaded successfully!');
+        navigate(`/profile/${owner}`);
+      } else {
+        console.error('File upload failed:', response.data);
+        // Handle error and display to the user
+      }
     } catch (error) {
       console.error('AxiosError:', error);
+      // Handle network error and display to the user
     }
   };
 
