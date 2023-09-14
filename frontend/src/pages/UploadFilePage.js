@@ -12,9 +12,6 @@ export default function UploadFilePage() {
     return (
       <>
         <Header is_active={is_active} />
-        <main>
-          <h4>A page to upload your files to the marketplace</h4>
-        </main>
         <UploadFile/>
         <Footer />
       </>

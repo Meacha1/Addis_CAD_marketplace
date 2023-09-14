@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth import logout
+
 from .models import UserCreate
 from .serializers import UserCreateSerializer
 import jwt
@@ -59,7 +60,7 @@ class FindUserView(APIView):
         email = request.data.get('email')
         
         try:
-            user = UserCreate.get(email=email)
+            user = UserCreate.objects.get(email=email)  # Use objects.get to retrieve a single object by email
             serializer = UserCreateSerializer(user)  # Create a serializer instance
             return Response(serializer.data)  # Return serialized user data
         except UserCreate.DoesNotExist:

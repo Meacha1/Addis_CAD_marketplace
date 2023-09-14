@@ -7,10 +7,10 @@ export async function loginUser(data) {
   // First check if user exists
   const findUserResponse = await fetch('/users/find/', {
     method: 'POST',
-    headers: {   
+    headers: {
+      'Authorization': `JWT ${localStorage.getItem('access')}`,
       'Content-Type': 'application/json',
       'X-CSRFToken': csrfToken, // Include the CSRF token in the headers
-      'Authorization': `JWT ${localStorage.getItem('access')}`,
     },
     body: JSON.stringify({ email: data.email }),
   });

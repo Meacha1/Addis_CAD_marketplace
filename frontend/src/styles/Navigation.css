@@ -90,3 +90,7 @@
 .user-profile:hover {
   background-color: #f0f0f0;
 }
+
+#root > div.App > div.nav-container > nav > div > button {
+  padding: 0;
+}

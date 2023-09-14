@@ -101,8 +101,8 @@ input[type="file"]::-webkit-file-upload-button {
 .profile_container {
   display: flex;
   flex-direction: column;
-  max-width: 30%;
-  min-width: 22%;
+  max-width: 35%;
+  min-width: 220px;
   border: 1px solid #ccc;
   background-color: #ccc;
   border-radius: 8px;
@@ -145,4 +145,8 @@ div.profile_container > h2 {
 
 .general-ingo span {
 font-weight: bold; 
+}
+
+#root > div.App > div.nav-container > nav > div {
+  padding: 8px;
 }

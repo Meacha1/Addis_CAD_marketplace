@@ -1,10 +1,10 @@
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import File, Purchase, Review
+from .models import File, Purchase, Review, AttachedFile
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .serializers import FileSerializer, PurchaseSerializer, ReviewSerializer
+from .serializers import FileSerializer, PurchaseSerializer, ReviewSerializer, AttachedFileSerializer
 from django.http import Http404
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import api_view
@@ -13,32 +13,9 @@ import re, json
 from django.db.models import Avg
 from decimal import Decimal
 from datetime import datetime, timedelta
-
-
-@api_view(['GET'])
-def  index(request):
-    routes = [
-        {
-            'endpoint': '/files/',
-            'method': 'GET',
-            'body': None,
-            'description': 'Returns an array of files'
-        },
-        {
-            'endpoint': '/files/',
-            'method': 'POST',
-            'body': {
-                'title': 'File title',
-                'description': 'File description',
-                'category': 'File category',
-                'price': 'File price',
-                'file': 'File file'
-            },
-            'description': 'Creates a new file'
-        },
-    ]
-  
-    return Response(routes)
+import io
+from PIL import Image
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 class FileListView(generics.ListCreateAPIView):
@@ -59,6 +36,21 @@ class UserFileListView(generics.ListAPIView):
 class FileUploadView(generics.CreateAPIView):
     queryset = File.objects.all()
     serializer_class = FileSerializer
+    parser_classes = (MultiPartParser,)  # Enable multi-part form data parsing
+
+    def perform_create(self, serializer):
+        parent_file = serializer.save()
+
+        uploaded_files = self.request.FILES.getlist('attached_files')
+        if not uploaded_files:
+            print('No files attached')
+            return Response({"message": "No files attached"}, status=status.HTTP_400_BAD_REQUEST)
+
+        for uploaded_file in uploaded_files:
+            attached_file = AttachedFile(parent_file=parent_file, attached_file=uploaded_file)
+            attached_file.save()
+
+        return Response({"message": "Files uploaded successfully"}, status=status.HTTP_201_CREATED)
 
 class FileDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = File.objects.all()
@@ -158,6 +150,14 @@ class ReviewGetView(generics.ListAPIView):
             # Handle other exceptions as needed
             return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+class AttachedFileListView(generics.ListAPIView):
+    serializer_class = AttachedFileSerializer
+
+    def get_queryset(self):
+        # Assuming you pass the parent file's ID in the URL as a parameter
+        parent_file_id = self.kwargs['parent_file_id']
+        return AttachedFile.objects.filter(parent_file__id=parent_file_id)
 
 # class PurchaseListView(generics.ListCreateAPIView):
 #     queryset = Purchase.objects.all()

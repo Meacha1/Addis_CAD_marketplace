@@ -4,21 +4,25 @@ import uuid
 
 
 class File(models.Model):
-  id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-  owner = models.ForeignKey(UserCreate, on_delete=models.CASCADE, null=True, default=1)
-  title = models.CharField(max_length=255)
-  description = models.TextField()
-  is_premium = models.BooleanField(default=False)
-  category = models.CharField(max_length=255, default='CAD')
-  file = models.FileField(upload_to='files/', blank=True)
-  preview_image = models.ImageField(blank=True, null=True, upload_to='previews/')
-  average_rating = models.PositiveIntegerField(default=0)
-  price = models.DecimalField(max_digits=6, decimal_places=2)
-  updated_at = models.DateTimeField(auto_now=True)
-  created_at = models.DateTimeField(auto_now_add=True)
-  
-  def __str__(self):
-    return self.title
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    owner = models.ForeignKey(UserCreate, on_delete=models.CASCADE, null=True, default=1)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    is_premium = models.BooleanField(default=False)
+    category = models.CharField(max_length=255, default='CAD')
+    file = models.FileField(upload_to='files/', blank=True)
+    thumbnail = models.ImageField(upload_to='thumbnails/', blank=True)
+    average_rating = models.PositiveIntegerField(default=0)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class AttachedFile(models.Model):
+    parent_file = models.ForeignKey(File, on_delete=models.CASCADE, related_name='attached_files', default=None)
+    attached_file = models.FileField(upload_to='attached_files/')
+
+    def __str__(self):
+        return self.attached_file.name
 
 class Purchase(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

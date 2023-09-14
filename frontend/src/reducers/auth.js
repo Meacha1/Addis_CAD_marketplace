@@ -21,8 +21,8 @@ import {
 } from '../actions/types';
 
 const initialState = {
-    access: localStorage.getItem('access'),
-    refresh: localStorage.getItem('refresh'),
+    access: null,
+    refresh: null,
     isAuthenticated: null,
     user: null
 };

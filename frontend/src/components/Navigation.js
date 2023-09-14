@@ -35,7 +35,7 @@ function NavigationBar({ userId }) {
             aria-label="Toggle navigation"
             onClick={toggleNavbar}
           >
-            <i className={`fas ${isOpen ? 'fa-times' : 'fa-bars'} fa-x`}></i>
+            <i className={`fas ${isOpen ? 'fa-times' : 'fa-bars'} fa-2x`}></i>
           </button>
           <div className={`navbar-collapse ${isOpen ? 'open' : ''}`}>
             <ul className="navbar-nav">

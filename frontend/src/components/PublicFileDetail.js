@@ -4,6 +4,7 @@ import '../styles/FileDetail.css';
 import BuyFile from './BuyFile';
 import { getUserInfoById } from '../utils/getUserInfo';
 import StarRating from './StarRating';
+import axios from 'axios';
 
 const PublicFileDetail = ({ files }) => {
   const { fileId } = useParams();
@@ -11,8 +12,10 @@ const PublicFileDetail = ({ files }) => {
   const [isVip, setIsVip] = useState(false);
   const [is_premium, setIsPremium] = useState(false);
   const [review, setReview] = useState([]);
+  const [currentFileIndex, setCurrentFileIndex] = useState(0); // Track the current file index
   const navigate = useNavigate();
   const [reviewerNames, setReviewerNames] = useState({});
+  const [associatedFiles, setAssociatedFiles] = useState([]); // State for associated files
 
   const location = useLocation();
   let { currentUserId } = location.state;
@@ -21,7 +24,9 @@ const PublicFileDetail = ({ files }) => {
 
   useEffect(() => {
     getReview();
+    fetchAssociatedFiles(); // Fetch associated files when the component loads
   }, []);
+
 
   const getReview = async () => {
     try {
@@ -31,7 +36,7 @@ const PublicFileDetail = ({ files }) => {
         },
       });
       const data = await response.json();
-      setReview(data.reviews); // Update reviews state with fetched data
+      setReview(data.reviews);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -79,7 +84,6 @@ const PublicFileDetail = ({ files }) => {
   }, [currentUserId]);
 
   useEffect(() => {
-    // Fetch reviewer names when the component mounts
     const fetchReviewerNames = async () => {
       if (Array.isArray(review)) {
         const names = {};
@@ -100,13 +104,12 @@ const PublicFileDetail = ({ files }) => {
       return userInfo?.first_name || '';
     } catch (error) {
       console.error(error);
-      return ''; // Return an empty string if user info is not available
+      return '';
     }
   };
 
   const handleDownload = async () => {
     if (!isVip && is_premium) {
-      // Redirect non-VIP users to the "be_vip" page
       navigate('/be_vip');
       return;
     }
@@ -115,21 +118,15 @@ const PublicFileDetail = ({ files }) => {
       try {
         const response = await fetch(file.file);
         const fileData = await response.blob();
-
-        // Create a blob URL for the file data
         const url = URL.createObjectURL(fileData);
-
-        // Create a temporary anchor element to trigger the download
         const a = document.createElement('a');
         a.href = url;
-        a.download = file.title; // Set the desired filename
+        a.download = file.title;
         a.style.display = 'none';
 
-        // Append the anchor element to the document and click it
         document.body.appendChild(a);
         a.click();
 
-        // Clean up
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
       } catch (error) {
@@ -138,32 +135,26 @@ const PublicFileDetail = ({ files }) => {
     }
   };
 
-  // Function to handle submitting the review
   const handleSubmitReview = async (event) => {
     event.preventDefault();
 
-    // Check if the user has already submitted a review for this file
     const hasSubmittedReview = review.some((reviewItem) => reviewItem.user === currentUserId);
 
-    // Check if the file is itself 
     if (currentUserId === file.owner) {
       alert('You cannot review your own file.');
       return;
     }
 
-
     if (hasSubmittedReview) {
-      // Prevent users from submitting multiple reviews
       alert('You have already submitted a review for this file.');
       return;
     }
 
-    // Create a review object with the necessary data
     const reviewData = {
-      rating: reviewRating, // Use the selected rating
-      comment: reviewComment, // Use the review comment
-      user: currentUserId, // Include the user ID
-      fileId: fileId, // Include the file ID
+      rating: reviewRating,
+      comment: reviewComment,
+      user: currentUserId,
+      fileId: fileId,
     };
 
     try {
@@ -178,17 +169,37 @@ const PublicFileDetail = ({ files }) => {
       });
 
       if (response.status === 201) {
-        window.location.reload();
         // Review was successfully created
         // You can update the UI or show a success message here
+        window.location.reload();
       } else {
-        // Handle other response statuses (e.g., validation errors)
         console.error('Failed to create review:', response.status);
       }
     } catch (error) {
       console.error('Failed to submit review', error);
     }
   };
+
+
+  const fetchAssociatedFiles = () => {
+    const parentFileId = fileId; // Replace with the actual parent file ID
+
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/attached-files/${parentFileId}/`, {
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('access')}`,
+        },
+      })
+      .then((response) => {
+        const associatedFilesData = response.data;
+        setAssociatedFiles(associatedFilesData); // Set associated files data in the state
+        console.log(`associatedFiles: ${associatedFilesData.length}`);
+      })
+      .catch((error) => {
+        console.error('Error fetching associated files:', error);
+      });
+  };
+
 
   if (!file) {
     return <div className='file-details'>File not found</div>;
@@ -210,7 +221,18 @@ const PublicFileDetail = ({ files }) => {
         {isAdmin && <button className='download-button' onClick={handleDownload}>Download File</button>}
         {!isAdmin && <BuyFile fileId={fileId} />}
       </div>
-      {/* Review list section */}
+      {associatedFiles.length > 0 && (
+        <div className='associated-files'>
+          <h3>Associated Files</h3>
+          <ul>
+            {associatedFiles.map((associatedFile, index) => (
+              <li key={index}>
+                <img src={associatedFile.attached_file} ></img>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className='review-list'>
         <h3>Reviews</h3>
         {Array.isArray(review) && review.map((reviewItem) => (
@@ -229,7 +251,6 @@ const PublicFileDetail = ({ files }) => {
           </div>
         ))}
       </div>
-      {/* Review section */}
       <div className='review-section'>
         <h3>Write a Review</h3>
         <div>

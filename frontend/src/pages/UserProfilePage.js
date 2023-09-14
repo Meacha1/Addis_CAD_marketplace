@@ -64,7 +64,7 @@ const UserProfilePage = () => {
 
   return (
     <>
-      <Header username={user?.username} is_active={true} owner={owner} />
+      <Header is_active={true} owner={owner} />
       <Navigation userId={id} />
       <div className="user-profile"> 
         <div className="user-profile-content">
