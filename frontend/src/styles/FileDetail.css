@@ -137,3 +137,12 @@ file-details > h2 {
   font-size: 12px;
   font-style: italic;
 }
+
+.associated-files > ul > li > img {
+  width: 400px;
+  object-fit: cover;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}

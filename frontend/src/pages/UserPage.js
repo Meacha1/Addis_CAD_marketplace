@@ -30,7 +30,7 @@ export default function UserPage() {
     <>
       <Header is_active={true} />
       <div className="nav-container">
-        <span>Hello {user?.first_name}!</span>
+        <span>Hello, {user?.first_name}!</span>
         <Navigation userId={userId} />
       </div>
       <div className="home-container">

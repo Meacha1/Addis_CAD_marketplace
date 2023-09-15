@@ -114,6 +114,7 @@ function UploadFile() {
           value={formData.title}
           onChange={handleChange}
           placeholder="Title"
+          required
         />
 
         <textarea
@@ -121,6 +122,7 @@ function UploadFile() {
           value={formData.description}
           onChange={handleChange}
           placeholder="Description"
+          required
         />
 
         <select
@@ -142,6 +144,8 @@ function UploadFile() {
           value={user_type !== 'admin' ? formData.price : 0}
           onChange={handleChange}
           placeholder="Price in Birr"
+          required={user_type !== 'admin'}
+          min={0}
         />
         {user_type === 'admin' && (
           <select
@@ -158,6 +162,7 @@ function UploadFile() {
         <input
           type="file"
           name="file"
+          required
           onChange={handleFileChange}
         />
 

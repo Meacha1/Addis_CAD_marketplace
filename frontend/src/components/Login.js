@@ -7,7 +7,7 @@ import { loginUser } from '../utils/auth';
 import axios from 'axios';
 import '../styles/Login.css';
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, user }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -43,6 +43,7 @@ const Login = ({ login, isAuthenticated }) => {
     }
   };
 
+
   const handleLogin = async (event) => {
     event.preventDefault();
 
@@ -55,7 +56,6 @@ const Login = ({ login, isAuthenticated }) => {
       if (response.message === 'Login successful!') {
         // Set the user information in the context
         const { id, email } = response.user; // Destructure user object
-        console.log('response.user.email: ', email);
         try {
           navigate(`/user/${id}`);
         } catch (error) {
@@ -69,6 +69,10 @@ const Login = ({ login, isAuthenticated }) => {
       console.error(error);
     }
   };
+
+  const userinfo = JSON.stringify(user);
+
+  console.log(`user: ${userinfo}`)
 
   return (
     <div className='container_login'>
@@ -119,6 +123,7 @@ const Login = ({ login, isAuthenticated }) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { login })(Login);

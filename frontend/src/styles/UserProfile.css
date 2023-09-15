@@ -150,3 +150,21 @@ font-weight: bold;
 #root > div.App > div.nav-container > nav > div {
   padding: 8px;
 }
+
+#root > div.App > nav > div {
+  margin-right: 10px;
+}
+
+#root > div.App > nav > div > button > i {
+  padding: 0px;
+  margin: 0px;
+}
+
+#root > div.App > nav > div > div {
+  margin: 5px;
+  z-index: 1;
+}
+
+#root > div.App > nav {
+  padding: 0;
+}
