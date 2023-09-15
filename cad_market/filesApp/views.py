@@ -1,6 +1,7 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.authentication import SessionAuthentication
 from .models import File, Purchase, Review, AttachedFile
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -58,6 +59,8 @@ class FileDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 @api_view(['POST'])
+@authentication_classes([SessionAuthentication])
+@permission_classes([])
 def handle_sms(request):
     try:
         # Parse the SMS data from the JSON request body
