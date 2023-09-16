@@ -8,10 +8,47 @@ import Footer from '../components/Footer';
 
 function BuyFilePage() {
   const [file, setFile] = useState(null);
+  const [price, setPrice] = useState(null);
   const { fileId } = useParams(); // Get the file ID from the route parameters
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [showTransactionForm, setShowTransactionForm] = useState(false);
   const [showTransactionForm1, setShowTransactionForm1] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    transaction_number: '',
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  
+  
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    // Build the URL with the transaction_number parameter
+    const transactionNumber = formData.transaction_number;
+    const url = `${process.env.REACT_APP_API_URL}/api/check-transaction/${transactionNumber}/${file.price}/`;
+
+    // Send a GET request with the transaction_number included in the URL
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${localStorage.getItem('access')}`,
+      },
+    })
+      .then((response) => {
+        // Handle the response here
+        // You can add logic to handle success or failure
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+
 
   useEffect(() => {
     const fetchFile = async () => {
@@ -23,6 +60,7 @@ function BuyFilePage() {
         });
         const data = await response.json();
         setFile(data);
+        console.log(price);
       } catch (error) {
         console.error(error);
         setFile(null);
@@ -48,13 +86,6 @@ function BuyFilePage() {
         setShowTransactionForm1(!showTransactionForm1);
     }
     };
-
-  const handlePurchase = (event) => {
-    event.preventDefault();
-    // Handle the purchase logic here (e.g., send a request to the server).
-    // You can use the 'fileId' to identify the file being purchased.
-    console.log(`Purchased file with ID: ${fileId}`);
-  };
 
   return (
     <>
@@ -93,6 +124,7 @@ function BuyFilePage() {
                         action="vip"
                         method="POST"
                         style={{ display: showTransactionForm ? 'block' : 'none' }}
+                        onSubmit={handleFormSubmit}
                       >
                         <label htmlFor="transaction_number">
                           Transaction Number:
@@ -104,8 +136,9 @@ function BuyFilePage() {
                             name="transaction_number"
                             placeholder="AG322c6Wk1"
                             required
+                            onChange={handleInputChange}
                           />
-                          <button type="submit" onClick={handlePurchase}>
+                          <button type="submit">
                             Submit
                           </button>
                         </div>
@@ -131,8 +164,9 @@ function BuyFilePage() {
                             name="transaction_number"
                             placeholder="AG322c6Wk1"
                             required
+                            onChange={handleInputChange}
                           />
-                          <button type="submit" onClick={handlePurchase}>
+                          <button type="submit">
                             Submit
                           </button>
                         </div>

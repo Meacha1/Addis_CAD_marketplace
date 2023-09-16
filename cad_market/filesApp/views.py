@@ -128,14 +128,25 @@ def handle_sms(request):
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication])
 @permission_classes([])
-def check_transaction_number(request, transaction_number):
+def check_transaction_number(request, transaction_number, price):
     try:
         # Check if the transaction_number exists in the database
         exists = Purchase.objects.filter(transaction_number=transaction_number).exists()
         
         if exists:
-            return Response({'message': f'Transaction number {transaction_number} exists in the database.'}, status=status.HTTP_200_OK)
+            print(f'Transaction number {transaction_number} exists in the database.')
+            # check if the price is the same
+            purchase = Purchase.objects.get(transaction_number=transaction_number)
+            # convert the price to Decimal
+            price = Decimal(price)
+            if purchase.transaction_amount >= price:
+                print(f'Transaction number {transaction_number} has the same price.')
+                return Response({'message': f'Transaction number {transaction_number} has the same price.'}, status=status.HTTP_200_OK)
+            else:
+                print(f'Transaction number {transaction_number} has different price.')
+                return Response({'message': f'Transaction number {transaction_number} has different price than {price}.'}, status=status.HTTP_400_BAD_REQUEST)
         else:
+            print(f'Transaction number {transaction_number} does not exist in the database.')
             return Response({'message': f'Transaction number {transaction_number} does not exist in the database.'}, status=status.HTTP_404_NOT_FOUND)
     
     except Exception as e:
