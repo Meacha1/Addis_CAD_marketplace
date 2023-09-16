@@ -69,18 +69,25 @@ def handle_sms(request):
 
         content = sms_data.get('content', '')
 
-        # Extract data from content (similar to your JavaScript code)
-        amount_match = re.search(r'ETB ([\d,.]+)', content)
-        date_match = re.search(r'on (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})', content)
-        transaction_number_match = re.search(r'transaction number ([A-Z0-9]+)', content)
+        # Extract data from content using regular expressions
+        amount_match = re.search(r'ETB\s+([\d,.]+)', content)
+        date_match = re.search(r'on\s+(\d{2}/\d{2}/\d{4}\s+\d{2}:\d{2}:\d{2})', content)
+        transaction_number_match = re.search(r'transaction number is\n([A-Z\d]+)', content)
+        buyer_phone_match = re.search(r'(251\d{9})', content)
+        print(amount_match)
+        print(date_match)
+        print(transaction_number_match)
+        print(buyer_phone_match)
 
-        if not (amount_match and date_match and transaction_number_match):
+        if not (amount_match and date_match and transaction_number_match and buyer_phone_match):
             print('Failed to extract SMS information')
             return Response('Invalid SMS format', status=status.HTTP_400_BAD_REQUEST)
 
         transaction_amount = Decimal(amount_match.group(1).replace(',', ''))
-        transaction_date = datetime.strptime(date_match.group(1), '%Y-%m-%d %H:%M:%S')
+        transaction_date_str = date_match.group(1)
+        transaction_date = datetime.strptime(transaction_date_str, '%d/%m/%Y %H:%M:%S')
         transaction_number = transaction_number_match.group(1)
+        buyer_phone = '+' + buyer_phone_match.group(1)  # Add "+" before the phone number
         message = content  # Use the entire content as the message
 
         expiry_date = transaction_date  # Initialize expiry date as transaction date
@@ -92,17 +99,20 @@ def handle_sms(request):
         elif transaction_amount >= 20:  # 20 birr for 30 days
             expiry_date += timedelta(days=30)
 
-        # Create a Payment object using the serializer
-        serializer = PurchaseSerializer(data={
-            'message': message,
+        # Create a data dictionary for the serializer
+        serializer_data = {
+            'buyer_phone': buyer_phone,
+            'message': message[:255],  # Truncate the message if it's too long
             'transaction_amount': transaction_amount,
             'transaction_date': transaction_date,
-            'expiry_date': expiry_date,
             'transaction_number': transaction_number,
-        })
+        }
+
+        # Create a Purchase object using the serializer
+        serializer = PurchaseSerializer(data=serializer_data)
 
         if serializer.is_valid():
-            serializer.save()  # Save the Payment object
+            serializer.save()  # Save the Purchase object
             print('SMS stored successfully')
             return Response('SMS received and stored successfully', status=status.HTTP_200_OK)
         else:
@@ -113,6 +123,27 @@ def handle_sms(request):
         # Log the exception for debugging
         print(f"Exception: {str(e)}")
         return Response('Error processing SMS', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication])
+@permission_classes([])
+def check_transaction_number(request, transaction_number):
+    try:
+        # Check if the transaction_number exists in the database
+        exists = Purchase.objects.filter(transaction_number=transaction_number).exists()
+        
+        if exists:
+            return Response({'message': f'Transaction number {transaction_number} exists in the database.'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': f'Transaction number {transaction_number} does not exist in the database.'}, status=status.HTTP_404_NOT_FOUND)
+    
+    except Exception as e:
+        # Log the exception for debugging
+        print(f"Exception: {str(e)}")
+        return Response('Error checking transaction number', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 
 class ReviewListView(generics.ListCreateAPIView):
     queryset = Review.objects.all()
@@ -161,6 +192,7 @@ class AttachedFileListView(generics.ListAPIView):
         # Assuming you pass the parent file's ID in the URL as a parameter
         parent_file_id = self.kwargs['parent_file_id']
         return AttachedFile.objects.filter(parent_file__id=parent_file_id)
+    
 
 # class PurchaseListView(generics.ListCreateAPIView):
 #     queryset = Purchase.objects.all()

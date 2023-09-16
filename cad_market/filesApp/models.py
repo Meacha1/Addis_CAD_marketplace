@@ -26,8 +26,9 @@ class AttachedFile(models.Model):
 
 class Purchase(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-  buyer = models.ForeignKey(UserCreate, on_delete=models.CASCADE)
-  file = models.ForeignKey(File, on_delete=models.CASCADE)
+  buyer_id = models.CharField(max_length=255 , default='')
+  buyer_phone = models.CharField(max_length=255 , default='')
+  file_id = models.CharField(max_length=255 , default='')
   message = models.CharField(max_length=255 , default='')
   transaction_amount = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
   transaction_number = models.CharField(max_length=255, default='')
