@@ -43,6 +43,7 @@ const UserProfilePage = () => {
 
   const owner = ownerId; // Define the owner variable
   const ownerName = user?.first_name;
+  const sale_count = user?.sale_count
 
 
   return (
@@ -59,7 +60,7 @@ const UserProfilePage = () => {
               <div className="general-ingo">
                 <p>Number of files uploaded: <span>{numberOfFilesUploaded}</span> </p>
                 <p>Average rating: <span>{average_rating}</span> </p>
-                <p>Number of files sold: <span>0</span> </p>
+                <p>Number of files sold: <span>{sale_count}</span> </p>
                 <p>Total amount of money earned: <span>0</span> Birr </p>
               </div>
             </div>

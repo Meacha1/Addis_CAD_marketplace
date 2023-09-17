@@ -15,6 +15,7 @@ function BuyFilePage({ isAuthenticated, ...props }) {
   const [showTransactionForm, setShowTransactionForm] = useState(false);
   const [showTransactionForm1, setShowTransactionForm1] = useState(false);
   const [responseMessage, setResponseMessage] = useState(null);
+  const [isAuthenticatedToDownload, setIsAuthenticatedToDownload] = useState(false);
   
   const [formData, setFormData] = useState({
     transaction_number: '',
@@ -41,10 +42,15 @@ function BuyFilePage({ isAuthenticated, ...props }) {
     })
       .then(async (response) => {
         const data = await response.json();
-        
-        // Handle the response here
-        // You can add logic to handle success or failure
-        console.log(data.message);
+        const message = data.message
+        console.log(message)
+        if (message === 'The transaction number has already been used.') {
+          alert("The transaction number has already been used.")
+        }
+        else if (message === 'You have completed a successful purchase.') {
+          alert("You have completed a successful purchase.")
+          setIsAuthenticatedToDownload(true)
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -90,13 +96,48 @@ function BuyFilePage({ isAuthenticated, ...props }) {
     }
     };
 
+    const handleDownload = async () => {
+      if (file) {
+        try {
+          const response = await fetch(file.file);
+          const fileData = await response.blob();
+    
+          // Extract the file extension from the original filename
+          const originalFileName = file.file;
+          const fileExtension = originalFileName.substring(originalFileName.lastIndexOf('.'));
+    
+          // Create a blob URL for the file data
+          const url = URL.createObjectURL(fileData);
+    
+          // Create a temporary anchor element to trigger the download
+          const a = document.createElement('a');
+          a.href = url;
+    
+          // Set the desired filename with the original extension
+          a.download = `${file.title}${fileExtension}`;
+    
+          a.style.display = 'none';
+    
+          // Append the anchor element to the document and click it
+          document.body.appendChild(a);
+          a.click();
+    
+          // Clean up
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        } catch (error) {
+          console.error('Error downloading the file:', error);
+        }
+      }
+    };
+
   return (
     <>
       <Header is_active={true}/>
       <div className="main-container">
         <div className='detail'>
           <div className="file-details">
-            <img src={`${file?.file}`} alt={`${file?.title}`} className='file-img' />
+            <img src={`${file?.thumbnail}`} alt={`${file?.title}`} className='file-img' />
             <h2>{file?.title}</h2>
             <p>{file?.description}</p>
             <p>Price: {file?.price}</p>
@@ -105,6 +146,9 @@ function BuyFilePage({ isAuthenticated, ...props }) {
           <button onClick={togglePaymentOptions} className="buy-button">
             Buy File
           </button>
+          {isAuthenticatedToDownload && 
+          <button className='download-button' onClick={handleDownload}>Download File</button>
+          }
         </div>
         <div className='buy'>
           {showPaymentOptions && (

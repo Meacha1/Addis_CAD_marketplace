@@ -126,7 +126,7 @@ function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated }) {
               {isAdmin[file.owner] && file.is_premium && <div className='premium-tag'></div>}
               {isAdmin[file.owner] && !file.is_premium && <div className='free-tag'></div>}
               <Link to={`/user_file/${file.id}`} state={{ currentUserId: currentUserId, isAdmin: isAdmin[file.owner] }} className='file-link'>
-                <img src={`${file.file}`} alt={`${file.title}`} className='card-img' />
+                <img src={`${file.thumbnail}`} alt={`${file.title}`} className='card-img' />
               </Link>
             </div>
             <div className='card-body'>

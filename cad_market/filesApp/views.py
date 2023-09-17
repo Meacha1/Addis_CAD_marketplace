@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication
 from .models import File, Purchase, Review, AttachedFile
+from users.models import UserCreate
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .serializers import FileSerializer, PurchaseSerializer, ReviewSerializer, AttachedFileSerializer
@@ -133,7 +134,7 @@ def check_transaction_number(request, transaction_number, price, buyer_id, file_
         # Check if the transaction_number exists in the database
         exists = Purchase.objects.filter(transaction_number=transaction_number).exists()
         purchase = Purchase.objects.get(transaction_number=transaction_number)
-        is_transaction_Number_valid = purchase.buyer_id == ''
+        is_transaction_Number_valid = purchase.buyer_id == '' or purchase.file_id == None
         if exists:
             if is_transaction_Number_valid:
                 print(f'Transaction number {transaction_number} exists in the database.')
@@ -145,17 +146,21 @@ def check_transaction_number(request, transaction_number, price, buyer_id, file_
                     # Update the purchase object
                     purchase.buyer_id = buyer_id
                     purchase.file_id = file_id
+                    sold_file = File.objects.get(id=file_id)
+                    owner = UserCreate.objects.get(id=sold_file.owner_id)
+                    owner.sale_count += 1
+                    sold_file.num_of_sales += 1
                     purchase.save()
-                    print(f'Transaction number {transaction_number} has the same price.')
-                    return Response({'message': f'Transaction number {transaction_number} has the same price.'}, status=status.HTTP_200_OK)
+                    sold_file.save()
+                    owner.save()
+                    print('You have completed a successful purchase.')
+                    return Response({'message': 'You have completed a successful purchase.'}, status=status.HTTP_200_OK)
                 else:
-                    print(f'Transaction number {transaction_number} has different price.')
-                    return Response({'message': f'Transaction number {transaction_number} has different price than {price}.'}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response({'message': 'The money you transfered is less than the price.'}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                print(f'Transaction number {transaction_number} has already been used.')
-                return Response({'message': f'Transaction number {transaction_number} has already been used.'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'message': 'The transaction number has already been used.'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            print(f'Transaction number {transaction_number} does not exist in the database.')
+            print(f'Check your transaction number and try again')
             return Response({'message': f'Transaction number {transaction_number} does not exist in the database.'}, status=status.HTTP_404_NOT_FOUND)
     
     except Exception as e:

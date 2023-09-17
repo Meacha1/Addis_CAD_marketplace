@@ -207,7 +207,7 @@ const PublicFileDetail = ({ files }) => {
 
   return (
     <div className='file-details'>
-      <img src={`${file.file}`} alt={`${file.title}`} state={currentUserId} className='file-img' />
+      <img src={`${file.thumbnail}`} alt={`${file.title}`} state={currentUserId} className='file-img' />
       <h2>{file.title}</h2>
       <p>{file.description}</p>
       <p>Price: {file.price}</p>

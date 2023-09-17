@@ -62,6 +62,7 @@ class UserCreate(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_vip = models.BooleanField(default=False)
+    sale_count = models.IntegerField(default=0)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'password', 'phone_number', 'user_type']

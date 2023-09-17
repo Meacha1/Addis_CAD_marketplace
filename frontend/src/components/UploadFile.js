@@ -20,6 +20,7 @@ function UploadFile() {
     price: '',
     owner: owner,
     is_premium: false,
+    thumbnail: null, // For the thumbnail
     attached_files: [], // Store attached files as an array
   });
 
@@ -59,6 +60,14 @@ function UploadFile() {
         ...formData,
         attached_files: attachedFiles, // Assign the array of selected files to attached_files
       });
+    } else if (e.target.name === 'thumbnail') {
+      // Handle the thumbnail
+      const selectedThumbnail = e.target.files[0];
+      console.log('Selected thumbnail:', selectedThumbnail);
+      setFormData({
+        ...formData,
+        thumbnail: selectedThumbnail, // Assign the selected file to the 'thumbnail' field
+      });
     }
   };
 
@@ -73,6 +82,7 @@ function UploadFile() {
     formPayload.append('price', formData.price);
     formPayload.append('owner', formData.owner);
     formPayload.append('is_premium', formData.is_premium);
+    formPayload.append('thumbnail', formData.thumbnail);
   
     // Append attached files
     formData.attached_files.forEach((file) => {
@@ -157,6 +167,12 @@ function UploadFile() {
             <option value={false}>Free</option>
           </select>
         )}
+        <input
+          type="file"
+          name="thumbnail"
+          required
+          onChange={handleFileChange}
+        />
 
         {/* Parent File Input */}
         <input

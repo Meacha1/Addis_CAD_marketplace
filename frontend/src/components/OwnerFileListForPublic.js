@@ -52,13 +52,14 @@ export default function OwnerFileListForPublic({ owner, onFilesCountChange, onAv
               <div key={file.id} className='card-item'>
                 <div className='card-image'>
                 <Link to={`/user_file/${file.id}`} state={{ currentUserId: currentUserId, isAdmin: isAdmin[file.owner] }} className='file-link'>
-                <img src={`${file.file}`} alt={`${file.title}`} className='card-img' />
+                <img src={`${file.thumbnail}`} alt={`${file.title}`} className='card-img' />
                 </Link>
                 </div>
                 <div className='card-body'>
                   <div className='info1'>
                     <h4 className='card-title'>{file.title}</h4>
                     <p className='card-text'>{file.description}</p>
+                    <p>Sale count: {file.num_of_sales}</p>
                     <div className='star-rating-container'>
                         <StarRating rating={file.average_rating} />
                     </div>

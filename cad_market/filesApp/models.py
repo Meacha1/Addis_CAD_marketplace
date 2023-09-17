@@ -13,6 +13,7 @@ class File(models.Model):
     file = models.FileField(upload_to='files/', blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', blank=True)
     average_rating = models.PositiveIntegerField(default=0)
+    num_of_sales = models.PositiveIntegerField(default=0)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -26,9 +27,9 @@ class AttachedFile(models.Model):
 
 class Purchase(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-  buyer_id = models.CharField(max_length=255 , default='')
+  buyer_id = models.CharField(max_length=255 , default='', null=True)
   buyer_phone = models.CharField(max_length=255 , default='')
-  file_id = models.CharField(max_length=255 , default='')
+  file_id = models.CharField(max_length=255 , default='', null=True)
   message = models.CharField(max_length=255 , default='')
   transaction_amount = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
   transaction_number = models.CharField(max_length=255, default='')

@@ -53,7 +53,7 @@ export default function ProfessionalFileLists({ owner }) {
               <div key={file.id} className='card-item'>
                 <div className='card-image'>
                   <Link to={`/file/${file.id}`} className='file-link'>
-                    <img src={`${file.file}`} alt={`${file.title}`} className='card-img' />
+                    <img src={`${file.thumbnail}`} alt={`${file.title}`} className='card-img' />
                   </Link>
                 </div>
                 <div className='card-body'>

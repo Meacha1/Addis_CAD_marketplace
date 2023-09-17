@@ -49,3 +49,7 @@ file-details > h2 {
   display: flex;
   justify-content: space-around;
 }
+
+#root > div.App > div.main-container > div.detail > button.buy-button {
+  margin: 30px;
+}
