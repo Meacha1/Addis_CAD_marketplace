@@ -128,23 +128,32 @@ def handle_sms(request):
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication])
 @permission_classes([])
-def check_transaction_number(request, transaction_number, price):
+def check_transaction_number(request, transaction_number, price, buyer_id, file_id):
     try:
         # Check if the transaction_number exists in the database
         exists = Purchase.objects.filter(transaction_number=transaction_number).exists()
-        
+        purchase = Purchase.objects.get(transaction_number=transaction_number)
+        is_transaction_Number_valid = purchase.buyer_id == ''
         if exists:
-            print(f'Transaction number {transaction_number} exists in the database.')
-            # check if the price is the same
-            purchase = Purchase.objects.get(transaction_number=transaction_number)
-            # convert the price to Decimal
-            price = Decimal(price)
-            if purchase.transaction_amount >= price:
-                print(f'Transaction number {transaction_number} has the same price.')
-                return Response({'message': f'Transaction number {transaction_number} has the same price.'}, status=status.HTTP_200_OK)
+            if is_transaction_Number_valid:
+                print(f'Transaction number {transaction_number} exists in the database.')
+                print(f'Buyer id is {buyer_id}')
+                print(f'File id is {file_id}')
+                # convert the price to Decimal
+                price = Decimal(price)
+                if purchase.transaction_amount >= price:
+                    # Update the purchase object
+                    purchase.buyer_id = buyer_id
+                    purchase.file_id = file_id
+                    purchase.save()
+                    print(f'Transaction number {transaction_number} has the same price.')
+                    return Response({'message': f'Transaction number {transaction_number} has the same price.'}, status=status.HTTP_200_OK)
+                else:
+                    print(f'Transaction number {transaction_number} has different price.')
+                    return Response({'message': f'Transaction number {transaction_number} has different price than {price}.'}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                print(f'Transaction number {transaction_number} has different price.')
-                return Response({'message': f'Transaction number {transaction_number} has different price than {price}.'}, status=status.HTTP_400_BAD_REQUEST)
+                print(f'Transaction number {transaction_number} has already been used.')
+                return Response({'message': f'Transaction number {transaction_number} has already been used.'}, status=status.HTTP_400_BAD_REQUEST)
         else:
             print(f'Transaction number {transaction_number} does not exist in the database.')
             return Response({'message': f'Transaction number {transaction_number} does not exist in the database.'}, status=status.HTTP_404_NOT_FOUND)

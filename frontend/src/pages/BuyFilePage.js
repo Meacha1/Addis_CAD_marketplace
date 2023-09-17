@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/BuyFilePage.css';
-import { useParams } from 'react-router-dom'; 
+import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
 import telebirr from '../assets/images/telebirr.png';
 import cbebirr from '../assets/images/cbebirr.png';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-function BuyFilePage() {
+function BuyFilePage({ isAuthenticated, ...props }) {
   const [file, setFile] = useState(null);
   const [price, setPrice] = useState(null);
   const { fileId } = useParams(); // Get the file ID from the route parameters
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [showTransactionForm, setShowTransactionForm] = useState(false);
   const [showTransactionForm1, setShowTransactionForm1] = useState(false);
+  const [responseMessage, setResponseMessage] = useState(null);
   
   const [formData, setFormData] = useState({
     transaction_number: '',
@@ -22,14 +24,13 @@ function BuyFilePage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  
+  const userId = props.user.id;
   
   const handleFormSubmit = (event) => {
     event.preventDefault();
     // Build the URL with the transaction_number parameter
     const transactionNumber = formData.transaction_number;
-    const url = `${process.env.REACT_APP_API_URL}/api/check-transaction/${transactionNumber}/${file.price}/`;
-
+    const url = `${process.env.REACT_APP_API_URL}/api/check-transaction/${transactionNumber}/${file.price}/${userId}/${file.id}/`;
     // Send a GET request with the transaction_number included in the URL
     fetch(url, {
       method: 'GET',
@@ -38,10 +39,12 @@ function BuyFilePage() {
         Authorization: `JWT ${localStorage.getItem('access')}`,
       },
     })
-      .then((response) => {
+      .then(async (response) => {
+        const data = await response.json();
+        
         // Handle the response here
         // You can add logic to handle success or failure
-        console.log(response);
+        console.log(data.message);
       })
       .catch((error) => {
         console.error(error);
@@ -182,5 +185,9 @@ function BuyFilePage() {
     </>
   );
 }
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
+});
 
-export default BuyFilePage;
+export default connect(mapStateToProps)(BuyFilePage);

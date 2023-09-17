@@ -11,5 +11,5 @@ urlpatterns = [
     path('Review/<str:pk>/', ReviewDetailView.as_view(), name='review_detail'),
     path('GetReview/<str:fileId>/', ReviewGetView.as_view(), name='get_review'),
     path('attached-files/<str:parent_file_id>/', AttachedFileListView.as_view(), name='attached-file-list'),
-    path('check-transaction/<str:transaction_number>/<str:price>/', check_transaction_number, name='check_transaction_number'),
+    path('check-transaction/<str:transaction_number>/<str:price>/<str:buyer_id>/<str:file_id>/', check_transaction_number, name='check_transaction_number'),
 ]
