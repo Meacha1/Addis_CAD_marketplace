@@ -129,14 +129,17 @@ def handle_sms(request):
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication])
 @permission_classes([])
-def check_transaction_number(request, transaction_number, price, buyer_id, file_id):
+def check_transaction_number(request,request_type, transaction_number, price, buyer_id, file_id):
     try:
         # Check if the transaction_number exists in the database
         exists = Purchase.objects.filter(transaction_number=transaction_number).exists()
+        if exists == False:
+            print(f'Transaction number does not exist in the database.')
+            return Response({'message': 'The transaction number does not exist in the database.'}, status=status.HTTP_400_BAD_REQUEST)
         purchase = Purchase.objects.get(transaction_number=transaction_number)
         is_transaction_Number_valid = purchase.buyer_id == '' or purchase.file_id == None
         if exists:
-            if is_transaction_Number_valid:
+            if is_transaction_Number_valid and request_type == 'buy':
                 print(f'Transaction number {transaction_number} exists in the database.')
                 print(f'Buyer id is {buyer_id}')
                 print(f'File id is {file_id}')
@@ -152,6 +155,27 @@ def check_transaction_number(request, transaction_number, price, buyer_id, file_
                     sold_file.num_of_sales += 1
                     purchase.save()
                     sold_file.save()
+                    owner.save()
+                    print('You have completed a successful purchase.')
+                    return Response({'message': 'You have completed a successful purchase.'}, status=status.HTTP_200_OK)
+                else:
+                    return Response({'message': 'The money you transfered is less than the price.'}, status=status.HTTP_400_BAD_REQUEST)
+            elif is_transaction_Number_valid and request_type == 'vipSubscription':
+                print(f'Transaction number {transaction_number} exists in the database.')
+                print(f'Buyer id is {buyer_id}')
+                print(f'File id is {file_id}')
+                # convert the price to Decimal
+                price = Decimal(price)
+                if purchase.transaction_amount >= price: # if the money transfered is greater than or equal to the minimum subscription price
+                    owner = UserCreate.objects.get(id=buyer_id)
+                    owner.is_vip = True
+                    owner.vip_subscription_date = purchase.transaction_date
+                    if price >= 5 and price < 10:
+                        owner.vip_subscription_expiration_date = datetime.now() + timedelta(days=30)
+                    elif price >= 10 and price < 20:
+                        owner.vip_subscription_expiration_date = datetime.now() + timedelta(days=60)
+                    elif price >= 20:
+                        owner.vip_subscription_expiration_date = datetime.now() + timedelta(days=90)
                     owner.save()
                     print('You have completed a successful purchase.')
                     return Response({'message': 'You have completed a successful purchase.'}, status=status.HTTP_200_OK)

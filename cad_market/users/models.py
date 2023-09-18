@@ -45,8 +45,8 @@ class UserManager(BaseUserManager):
 
 class UserCreate(AbstractBaseUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    first_name = models.CharField(max_length=50, unique=True)
-    last_name = models.CharField(max_length=50, unique=True)
+    first_name = models.CharField(max_length=50, unique=False)
+    last_name = models.CharField(max_length=50, unique=False)
     email = models.EmailField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
@@ -63,6 +63,8 @@ class UserCreate(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_vip = models.BooleanField(default=False)
     sale_count = models.IntegerField(default=0)
+    vip_subscription_date = models.DateTimeField(default=None, null=True, blank=True)
+    vip_subscription_expiration_date = models.DateTimeField(default=None, null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'password', 'phone_number', 'user_type']

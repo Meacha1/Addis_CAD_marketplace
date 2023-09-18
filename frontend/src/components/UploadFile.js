@@ -93,7 +93,7 @@ function UploadFile() {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/UploadFile/${owner}/`, formPayload, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: `JWT ${localStorage.getItem('access')}`,
+          'Authorization': `JWT ${localStorage.getItem('access')}`,
         },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
@@ -167,6 +167,7 @@ function UploadFile() {
             <option value={false}>Free</option>
           </select>
         )}
+        <h4>Thumbnail:</h4>
         <input
           type="file"
           name="thumbnail"
@@ -175,6 +176,7 @@ function UploadFile() {
         />
 
         {/* Parent File Input */}
+        <h4>Parent File:</h4>
         <input
           type="file"
           name="file"
@@ -183,6 +185,7 @@ function UploadFile() {
         />
 
         {/* Attached Files Input */}
+        <h4>Attached Files:</h4>
         <input
           type="file"
           name="attached_files"

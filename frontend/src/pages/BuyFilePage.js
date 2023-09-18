@@ -31,7 +31,7 @@ function BuyFilePage({ isAuthenticated, ...props }) {
     event.preventDefault();
     // Build the URL with the transaction_number parameter
     const transactionNumber = formData.transaction_number;
-    const url = `${process.env.REACT_APP_API_URL}/api/check-transaction/${transactionNumber}/${file.price}/${userId}/${file.id}/`;
+    const url = `${process.env.REACT_APP_API_URL}/api/check-transaction/buy/${transactionNumber}/${file.price}/${userId}/${file.id}/`;
     // Send a GET request with the transaction_number included in the URL
     fetch(url, {
       method: 'GET',

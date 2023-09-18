@@ -130,7 +130,7 @@ WSGI_APPLICATION = 'cad_market.wsgi.application'
 DATABASES = {
        'default': {
            'ENGINE': 'django.db.backends.mysql',
-           'NAME': 'userdb2',
+           'NAME': 'userdb3',
            'USER': 'root',
            'PASSWORD': 'password',
            'HOST': 'localhost',

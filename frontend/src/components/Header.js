@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Header.css';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +7,7 @@ import logo from '../assets/images/logo.png';
 
 export default function Header({ is_active , username }) {
   const navigate = useNavigate();
-
+  
   const logingout = async(e) => {
     await logout();
     navigate('/');

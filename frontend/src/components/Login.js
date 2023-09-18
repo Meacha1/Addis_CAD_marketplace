@@ -57,6 +57,9 @@ const Login = ({ login, isAuthenticated, user }) => {
         // Set the user information in the context
         const { id, email } = response.user; // Destructure user object
         try {
+          if (id === null) {
+            navigate(`/login`);
+          }
           navigate(`/user/${id}`);
         } catch (error) {
           console.error('error in navigate: ', error);

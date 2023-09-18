@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signup } from '../actions/auth';
@@ -52,15 +53,16 @@ const Signup = ({ signup, isAuthenticated }) => {
 
     const navigate = useNavigate();
 
-    if (isAuthenticated) {
-        navigate('/');
-        return null;
-    }
+    // Use useEffect for navigation
+    useEffect(() => {
+      if (isAuthenticated) {
+          navigate('/');
+      }
 
-    if (accountCreated) {
-        navigate('/login');
-        return null;
-    }
+      if (accountCreated) {
+          navigate('/login');
+      }
+  }, [isAuthenticated, accountCreated, navigate]);
 
     return (
       <div className="container mt-5">
