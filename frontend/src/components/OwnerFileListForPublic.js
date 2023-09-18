@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import '../styles/UserFileLists.css';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { getUserInfoById } from '../utils/getUserInfo';
+import { connect } from 'react-redux';
 import StarRating from './StarRating';
 import axios from 'axios';
 
-export default function OwnerFileListForPublic({ owner, onFilesCountChange, onAverage_rating }) {
+function OwnerFileListForPublic({ owner, onFilesCountChange, onAverage_rating,isAuthenticated, ...props }) {
   const [files, setFiles] = useState([]);
   const location = useLocation();
-  const { isAdmin } = location.state;
+  const [isAdmin, setIsAdmin] = useState({});
   const ownerId = owner;
   let { currentUserId } = location.state;
   currentUserId = currentUserId.userId;
@@ -16,8 +18,22 @@ export default function OwnerFileListForPublic({ owner, onFilesCountChange, onAv
   useEffect(() => {
     if (ownerId) {
       getFiles();
+      fetchUserInfo(ownerId);
     }
   }, [ownerId]);
+
+  const fetchUserInfo = async (ownerId) => {
+    try {
+      const userInfo = await getUserInfoById(ownerId);
+      console.log(`userInfo: ${userInfo.user_type}`);
+      setIsAdmin((prevIsAdmin) => ({
+        ...prevIsAdmin,
+        [ownerId]: userInfo.user_type === 'admin',
+      }));
+    } catch (error) {
+      console.log('noooo');
+    }
+  };
 
   const getFiles = async () => {
     try {
@@ -51,7 +67,7 @@ export default function OwnerFileListForPublic({ owner, onFilesCountChange, onAv
             files.map((file) => (
               <div key={file.id} className='card-item'>
                 <div className='card-image'>
-                <Link to={`/user_file/${file.id}`} state={{ currentUserId: currentUserId, isAdmin: isAdmin[file.owner] }} className='file-link'>
+                <Link to={`/user_file/${file.id}`} state={{ currentUserId: currentUserId, isAdmin: isAdmin[ownerId] }} className='file-link'>
                 <img src={`${file.thumbnail}`} alt={`${file.title}`} className='card-img' />
                 </Link>
                 </div>
@@ -83,3 +99,10 @@ export default function OwnerFileListForPublic({ owner, onFilesCountChange, onAv
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps)(OwnerFileListForPublic);

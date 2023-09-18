@@ -11,6 +11,7 @@ function BeVip({ isAuthenticated, ...props }) {
   const [formData, setFormData] = useState({
     transaction_number: '',
   });
+  const [selectedPeriod, setSelectedPeriod] = useState('1');
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,38 +19,46 @@ function BeVip({ isAuthenticated, ...props }) {
 
   const userId = props.user.id;
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
 
+    // Define the price based on the selected period
+    let price = '5.00'; // Default price for 1 month
+
+    if (selectedPeriod === '2') {
+      price = '10.00'; // Price for 2 months
+    } else if (selectedPeriod === '3') {
+      price = '20.00'; // Price for 3 months
+    }
+
+    // Build the URL with the transaction_number and price parameters
     const transactionNumber = formData.transaction_number;
-    const url = `${process.env.REACT_APP_API_URL}/api/check-transaction/vipSubscription/${transactionNumber}/5.00/${userId}/123/`;
+    const url = `${process.env.REACT_APP_API_URL}/api/check-transaction/buy/${transactionNumber}/${price}/${userId}/123/`;
 
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `JWT ${localStorage.getItem('access')}`,
-        },
-      });
-
-      if (response.ok) {
+    // Send a GET request with the transaction_number and price included in the URL
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${localStorage.getItem('access')}`,
+      },
+    })
+      .then(async (response) => {
         const data = await response.json();
         const message = data.message;
         console.log(message);
-
-        if (message === 'The transaction number does not exist in the database.') {
+        if (message === 'The transaction number has already been used.') {
           alert('The transaction number has already been used.');
         } else if (message === 'You have completed a successful purchase.') {
           alert('You have completed a successful purchase.');
+        } else if (message == "The transaction number does not exist in the database.") {
+          alert('The transaction number does not exist in the database.')
         }
-      } else {
-        throw new Error('Network response was not ok');
-      }
-    } catch (error) {
-      console.error(error);
-      alert('Check your transaction number and try again');
-    }
+
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const togglePaymentOptions = () => {
@@ -89,12 +98,56 @@ function BeVip({ isAuthenticated, ...props }) {
             <h2>VIP Membership</h2>
           </div>
           <ul>
-            <li>Unlimited projects and estimates</li>
-            <li>Unlimited project updates</li>
-            <li>Early access to new features and updates</li>
-            <li>Bill of quantity report for major materials</li>
+            <li>Can download all files</li>
+            <li>Can upload files to your account</li>
+            <li>Can give reviews to a file</li>
           </ul>
-          <h4>5 birr/month or 10 birr/2 months or 20 birr/3 months</h4>
+        </div>
+      </div>
+      <div className="membership-options">
+        <div className="vip">
+          <div className="vip-header">
+            <h2>VIP Membership</h2>
+          </div>
+          <ul>
+          </ul>
+          <h4>Select Membership Period:</h4>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="period"
+                value="1"
+                checked={selectedPeriod === '1'}
+                onChange={() => setSelectedPeriod('1')}
+              />
+              1 month (5 birr)
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="period"
+                value="2"
+                checked={selectedPeriod === '2'}
+                onChange={() => setSelectedPeriod('2')}
+              />
+              2 months (10 birr)
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="period"
+                value="3"
+                checked={selectedPeriod === '3'}
+                onChange={() => setSelectedPeriod('3')}
+              />
+              3 months (20 birr)
+            </label>
+          </div>
         </div>
       </div>
       <button onClick={togglePaymentOptions} className="upgrade-button">

@@ -26,13 +26,14 @@ const UserProfilePage = () => {
     setAverage_rating(rating);
   };
 
-
   useEffect(() => {
     async function fetchUserInfo() {
       try {
-        const userInfo = await getUserInfoById(ownerId);
-        setUser(userInfo);
-        setAvatarURL(userInfo.avatar)
+        if (ownerId) { // Check if ownerId is defined
+          const userInfo = await getUserInfoById(ownerId);
+          setUser(userInfo);
+          setAvatarURL(userInfo.avatar);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -48,8 +49,7 @@ const UserProfilePage = () => {
 
   return (
     <>
-      <Header username={user?.username} is_active={true} owner={owner} />
-      <Navigation />
+      <Header is_active={true}/>
       <div className="user-profile"> 
         <div className="user-profile-content">
           <div className='profile_container'>

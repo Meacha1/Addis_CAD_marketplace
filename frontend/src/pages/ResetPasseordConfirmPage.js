@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 import { useNavigate, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reset_password_confirm } from '../actions/auth';
@@ -35,37 +37,41 @@ const ResetPasswordConfirm = ({ reset_password_confirm }) => {
   }
 
   return (
-    <div className='container mt-5'>
-      <form onSubmit={onSubmit}>
-        <div className='form-group'>
-          <input
-            className='form-control'
-            type='password'
-            placeholder='New Password'
-            name='new_password'
-            value={new_password}
-            onChange={onChange}
-            minLength='6'
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            className='form-control'
-            type='password'
-            placeholder='Confirm New Password'
-            name='re_new_password'
-            value={re_new_password}
-            onChange={onChange}
-            minLength='6'
-            required
-          />
-        </div>
-        <button className='btn btn-primary' type='submit'>
-          Reset Password
-        </button>
-      </form>
-    </div>
+    <>
+      <Header />
+      <div className='container mt-5'>
+        <form onSubmit={onSubmit}>
+          <div className='form-group'>
+            <input
+              className='form-control'
+              type='password'
+              placeholder='New Password'
+              name='new_password'
+              value={new_password}
+              onChange={onChange}
+              minLength='6'
+              required
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              className='form-control'
+              type='password'
+              placeholder='Confirm New Password'
+              name='re_new_password'
+              value={re_new_password}
+              onChange={onChange}
+              minLength='6'
+              required
+            />
+          </div>
+          <button className='btn btn-primary' type='submit'>
+            Reset Password
+          </button>
+        </form>
+      </div>
+      <Footer />
+    </>
   );
 };
 

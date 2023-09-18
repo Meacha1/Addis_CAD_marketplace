@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reset_password } from '../actions/auth';
@@ -36,25 +38,29 @@ const ResetPassword = ({ reset_password }) => {
     }
 
     return (
-        <div className='container mt-5'>
-            <h1>Request Password Reset:</h1>
-            <form onSubmit={onSubmit}>
-                <div className='form-group'>
-                    <input
-                        className='form-control'
-                        type='email'
-                        placeholder='Email'
-                        name='email'
-                        value={email}
-                        onChange={onChange}
-                        required
-                    />
-                </div>
-                <button className='btn btn-primary' type='submit'>Reset Password</button>
-            </form>
-            {/* Add the ToastContainer component at the bottom of your component */}
-            <ToastContainer />
-        </div>
+        <>
+            <Header />
+            <div className='container mt-5'>
+                <h1>Request Password Reset:</h1>
+                <form onSubmit={onSubmit}>
+                    <div className='form-group'>
+                        <input
+                            className='form-control'
+                            type='email'
+                            placeholder='Email'
+                            name='email'
+                            value={email}
+                            onChange={onChange}
+                            required
+                        />
+                    </div>
+                    <button className='btn btn-primary' type='submit'>Reset Password</button>
+                </form>
+                {/* Add the ToastContainer component at the bottom of your component */}
+                <ToastContainer />
+            </div>
+            <Footer />
+        </>
     );
 };
 

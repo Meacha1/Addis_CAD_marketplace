@@ -151,7 +151,7 @@ function UploadFile() {
         <input
           type="number"
           name="price"
-          value={user_type !== 'admin' ? formData.price : 0}
+          value={user_type !== 'admin' ? formData.price : ''}
           onChange={handleChange}
           placeholder="Price in Birr"
           required={user_type !== 'admin'}

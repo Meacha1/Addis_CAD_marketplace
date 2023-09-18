@@ -29,7 +29,7 @@ const Activate = ({ verify }) => {
     }, [verify, uid, token]); // Include uid and token in the dependencies array
 
     if (verified) {
-        navigate('/');
+        navigate('/login');
     }
 
     return (
