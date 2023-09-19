@@ -5,7 +5,6 @@ import Navigation from '../components/Navigation';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ProfessionalFileLists from '../components/ProfessionalFileLists';
-import UserInfo from '../components/UserInfo';
 import '../styles/UserProfile.css';
 import { Link } from 'react-router-dom';
 import defaultAvatar from '../assets/images/user.png';
@@ -15,6 +14,16 @@ const UserProfilePage = () => {
   const { id } = useParams();
   const [avatarURL, setAvatarURL] = useState(defaultAvatar);
   const [user, setUser] = useState(null);
+  const [numberOfFilesUploaded, setNumberOfFilesUploaded] = useState(0);
+  const [average_rating, setAverage_rating] = useState(0);
+
+  const updateNumberOfFilesUploaded = (count) => {
+    setNumberOfFilesUploaded(count);
+  };
+
+  const updateAverage_rating = (rating) => {
+    setAverage_rating(rating);
+  };
 
   useEffect(() => {
     async function fetchUserInfo() {
@@ -62,6 +71,8 @@ const UserProfilePage = () => {
     }
   };
 
+  const sale_count = user?.sale_count
+
   return (
     <>
       <Header is_active={true} owner={owner} />
@@ -80,6 +91,12 @@ const UserProfilePage = () => {
                 </div>
               </div>
               <h3>Hello, {user?.first_name}</h3>
+              <div className="general-ingo">
+                <p>Number of files uploaded: <span>{numberOfFilesUploaded}</span> </p>
+                <p>Average rating: <span>{average_rating}</span> </p>
+                <p>Number of files sold: <span>{sale_count}</span> </p>
+                <p>Total amount of money earned: <span>0</span> Birr </p>
+              </div>
               <button className="upload">
                 <Link
                   to={{ pathname: `/uploadFile/${owner}`, state: { is_active: true } }}
@@ -90,7 +107,7 @@ const UserProfilePage = () => {
               </button>
             </div>
             <div className="file-list">
-              <ProfessionalFileLists owner={owner} />
+              <ProfessionalFileLists owner={owner} onFilesCountChange={updateNumberOfFilesUploaded} onAverage_rating={updateAverage_rating}/>
             </div>
         </div>
         <Footer />

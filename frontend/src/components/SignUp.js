@@ -45,7 +45,7 @@ const Signup = ({ signup, isAuthenticated }) => {
   }, [isAuthenticated, accountCreated, navigate]);
 
     return (
-      <div className="container">
+      <div className="container mt-5">
         <h1>Sign Up</h1>
         <p>Create your Account</p>
         <form onSubmit={(e) => onSubmit(e)}>
@@ -125,8 +125,9 @@ const Signup = ({ signup, isAuthenticated }) => {
               value={user_type}
               onChange={(e) => onChange(e)}
             >
-              <option value="user">User (Register as a buyer only)</option>
-              <option value="professional">Professional (Register to buy and sale)</option>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+              <option value="professional">Professional</option>
             </select>
           </div>
           <button className="btn btn-primary" type="submit">

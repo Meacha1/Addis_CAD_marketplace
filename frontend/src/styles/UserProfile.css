@@ -168,3 +168,7 @@ font-weight: bold;
 #root > div.App > nav {
   padding: 0;
 }
+
+#root > div.App > div.user-profile > div > div.profile_container > button {
+  margin: 20px;
+}

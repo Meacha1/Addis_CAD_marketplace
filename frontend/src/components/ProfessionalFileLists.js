@@ -3,24 +3,9 @@ import '../styles/UserFileLists.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-export default function ProfessionalFileLists({ owner }) {
+export default function ProfessionalFileLists({ owner, onFilesCountChange, onAverage_rating, ...props }) {
   const [files, setFiles] = useState([]);
   const ownerId = owner;
-
-  const pagenation = (data, page, perPage) => {
-    const offset = (page - 1) * perPage;
-    const paginatedItems = data.slice(offset, offset + perPage);
-    const totalPages = Math.ceil(data.length / perPage);
-    return {
-      page,
-      perPage,
-      prePage: page > 1 ? page - 1 : null,
-      nextPage: page < totalPages ? page + 1 : null,
-      total: data.length,
-      totalPages,
-      data: paginatedItems,
-    };
-  };
 
   useEffect(() => {
     if (ownerId) {
@@ -37,6 +22,19 @@ export default function ProfessionalFileLists({ owner }) {
       });
       const data = response.data;
       setFiles(data);
+
+      // Calculate average rating and update it via the callback
+      if (data.length === 0) {
+        onAverage_rating(0);
+      } else {
+        const average_rating = data.reduce((total, file) => total + file.average_rating, 0) / data.length;
+        // Make it 2 decimal places
+        const roundedRating = average_rating.toFixed(2);
+        onAverage_rating(roundedRating);
+      }
+
+      // Update files count via the callback
+      onFilesCountChange(data.length);
     } catch (error) {
       console.error('Error fetching files:', error);
     }
