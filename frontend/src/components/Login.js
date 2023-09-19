@@ -21,28 +21,10 @@ const Login = ({ login, isAuthenticated, user }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    login(email, password);
     handleLogin(e); // Pass the event object to the handleLogin function
+    login(email, password);
+    
   };
-
-  const continueWithGoogle = async () => {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}/google`);
-      window.location.replace(res.data.authorization_url);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const continueWithFacebook = async () => {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/facebook/?redirect_uri=${process.env.REACT_APP_API_URL}/facebook`);
-      window.location.replace(res.data.authorization_url);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -107,13 +89,6 @@ const Login = ({ login, isAuthenticated, user }) => {
           Login
         </button>
       </form>
-      <button className='google' onClick={continueWithGoogle}>
-        Continue With Google
-      </button>
-      <br />
-      <button className='facebook' onClick={continueWithFacebook}>
-        Continue With Facebook
-      </button>
       <p className='mt-3'>
         Don't have an account? <Link to='/signup'>Sign Up</Link>
       </p>

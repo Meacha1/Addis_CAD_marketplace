@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/UserInfo.css';
 import defaultAvatar from '../assets/images/user.png';
 
 const UserInfo = ({ user, owner }) => {

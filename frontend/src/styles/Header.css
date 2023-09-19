@@ -1,9 +1,7 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Quicksand:wght@300&display=swap");
 .header-container {
-  background-color: #333;
+  background-color: rgba(1, 19, 20, 0.7);
   padding: 5px;
-  color: #f1f0f0;
+  color: white;
 }
 
 .header {
@@ -55,5 +53,12 @@ div.auth-buttons button {
 div.auth-buttons button:hover {
   background-color: #707070;
   color:#f2f2f2;
+}
+
+#root > div.App > div > div.header-container > header > div.logo > h2 {
+  color: #f1f0f0;
+  font-family: Montserrat;
+  font-weight: normal;
+  font-size: 1.8rem;
 }
 

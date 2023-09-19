@@ -71,7 +71,10 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://127.0.0.1:8000",
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'cad_market.urls'
 
@@ -141,6 +144,11 @@ DATABASES = {
             'CONN_MAX_AGE': 86400,
        }
 }
+
+# Tell Django to use the test database when running tests
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

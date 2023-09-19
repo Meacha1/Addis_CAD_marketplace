@@ -40,7 +40,6 @@ function App() {
             <Route path='/be_vip' element={<BeVipPage />} />
             <Route path='/buy/:fileId' element={<BuyFilePage />} />
             <Route path='/owners_profile_for_public/:ownerId' element={<OwnersProfileForPublic />} />
-            
           </Routes>
         </div>
       </Router>

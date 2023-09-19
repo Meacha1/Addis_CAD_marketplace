@@ -162,8 +162,6 @@ export const login = (email, password) => async dispatch => {
 
 
     const body = JSON.stringify({ email, password });
-    console.log(body);
-
 
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/create/`, body, config);
@@ -279,9 +277,6 @@ export const reset_password_confirm = (uid, token, new_password, re_new_password
 };
 
 export const logout = () => dispatch => {
-    localStorage.removeItem('access');
-    localStorage.removeItem('refresh');
-    localStorage.removeItem('reduxState');
     dispatch({
         type: LOGOUT
     });

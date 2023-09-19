@@ -10,5 +10,4 @@ urlpatterns = [
     path('findByid/<str:id>/', FindUserByIDView.as_view(), name='user-find-by-id'),
     path('logout/', UserLogoutView.as_view(), name='logout'),
     path('uploadAvatar/<str:id>/', UploadAvatarView.as_view(), name='upload-avatar'),
-
 ]

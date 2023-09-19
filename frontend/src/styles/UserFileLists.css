@@ -1,3 +1,9 @@
+body {
+  background-image: none;
+  background-size: cover; /* This scales the background image to cover the entire body */
+  background-repeat: no-repeat; /* Prevent the background image from repeating */
+  background-attachment: fixed; /* Keeps the background image fixed while scrolling */
+}
 .card-group {
     display: flex;
     flex-wrap: wrap;
