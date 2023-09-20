@@ -56,8 +56,9 @@ function BeVip({ isAuthenticated, ...props }) {
           navigate(-1)
         } else if (message == "The transaction number does not exist in the database.") {
           alert('The transaction number does not exist in the database.')
+        } else if (message == "The money you transfered is less than the price.") {
+          alert('The money you transferred is less than package you have selected.')
         }
-
       })
       .catch((error) => {
         console.error(error);
@@ -83,7 +84,7 @@ function BeVip({ isAuthenticated, ...props }) {
   };
 
   return (
-    <div className="container">
+    <div className="container-vip">
       <h1 className="upgrade-title">Upgrade to VIP Membership</h1>
       <div className="membership-options">
         <div className="free">
@@ -115,41 +116,43 @@ function BeVip({ isAuthenticated, ...props }) {
           <ul>
           </ul>
           <h4>Select Membership Period:</h4>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="period"
-                value="1"
-                checked={selectedPeriod === '1'}
-                onChange={() => setSelectedPeriod('1')}
-              />
-              1 month (5 birr)
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="period"
-                value="2"
-                checked={selectedPeriod === '2'}
-                onChange={() => setSelectedPeriod('2')}
-              />
-              2 months (10 birr)
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="period"
-                value="3"
-                checked={selectedPeriod === '3'}
-                onChange={() => setSelectedPeriod('3')}
-              />
-              3 months (20 birr)
-            </label>
+          <div className='vip-period'>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="period"
+                  value="1"
+                  checked={selectedPeriod === '1'}
+                  onChange={() => setSelectedPeriod('1')}
+                />
+                1 month (5 birr)
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="period"
+                  value="2"
+                  checked={selectedPeriod === '2'}
+                  onChange={() => setSelectedPeriod('2')}
+                />
+                2 months (10 birr)
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="period"
+                  value="3"
+                  checked={selectedPeriod === '3'}
+                  onChange={() => setSelectedPeriod('3')}
+                />
+                3 months (20 birr)
+              </label>
+            </div>
           </div>
         </div>
       </div>
