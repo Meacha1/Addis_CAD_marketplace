@@ -58,6 +58,33 @@ class FileDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = File.objects.all()
     serializer_class = FileSerializer
 
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        # Handle attached_files
+        attached_files = request.FILES.getlist('attached_files')
+
+        # Clear previously attached files
+        AttachedFile.objects.filter(parent_file=instance).delete()
+
+        # Create and save new AttachedFile instances for the uploaded files
+        for file in attached_files:
+            attached_file = AttachedFile(attached_file=file, parent_file=instance)
+            attached_file.save()
+
+        # Update other fields (title, description, category, price)
+        instance.title = request.data.get('title')
+        instance.description = request.data.get('description')
+        instance.category = request.data.get('category')
+        instance.price = request.data.get('price')
+
+        # Save the updated instance
+        instance.save()
+
+        # Return the updated data
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication])

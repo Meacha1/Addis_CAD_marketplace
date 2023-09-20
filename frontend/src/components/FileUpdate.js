@@ -12,7 +12,7 @@ function FileUpdate() {
     price: 0,
     file: null,
     thumbnail: null,
-    attachedFiles: [],
+    attached_files: [],
   });
   const [thumbnailChanged, setThumbnailChanged] = useState(false);
   const [attachedFilesChanged, setAttachedFilesChanged] = useState(false);
@@ -35,12 +35,13 @@ function FileUpdate() {
           description: fileData.description,
           category: fileData.category,
           price: fileData.price,
+          owner: fileData.owner, // Set owner from API response
         });
       } catch (error) {
         console.error('AxiosError:', error);
       }
     };
-  
+
     fetchData();
   }, [fileId]);
 
@@ -66,20 +67,17 @@ function FileUpdate() {
       thumbnail: e.target.files[0]
     });
     setThumbnailChanged(true);
-    // Handle thumbnail change and update state
-
   };
 
   const handleAttachedFilesChange = (e) => {
     const attachedFiles = Array.from(e.target.files);
+    console.log('Selected Files:', attachedFiles);
     setFormData({
       ...formData,
-      attachedFiles: attachedFiles,
+      attached_files: attachedFiles,
     });
     setAttachedFilesChanged(true);
-    // Handle attached files change and update state
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -94,8 +92,9 @@ function FileUpdate() {
       formPayload.append('thumbnail', formData.thumbnail);
     }
   
-    if(attachedFilesChanged) {
-      formData.attachedFiles.forEach((file) => {
+    if (attachedFilesChanged) {
+      console.log('Attached Files:', formData.attached_files);
+      formData.attached_files.forEach((file) => {
         formPayload.append('attached_files', file);
       });
     }
@@ -115,10 +114,10 @@ function FileUpdate() {
       console.log('Response Data:', response.data);
       window.history.back();
     } catch (error) {
-      console.log(error)
+      console.error(error);
     }
 
-    navigate(`/profile/${formData?.owner}`);
+    navigate(`/profile/${formData.owner}`);
   };
 
   return (
@@ -144,8 +143,13 @@ function FileUpdate() {
           value={formData.category}
           onChange={handleChange}
         >
-          <option value="CAD">CAD</option>
-          <option value="Image">Image</option>
+          <option value="DWG">DWG</option>
+          <option value="IMG">Image</option>
+          <option value="PDF">PDF</option>
+          <option value="DOC">DOC</option>
+          <option value="XLS">XLS</option>
+          <option value="Rvt">Rvt</option>
+
         </select>
 
         <input
@@ -170,15 +174,15 @@ function FileUpdate() {
         <h4>Attached Files:</h4>
         <input
           type="file"
-          name="attached_files"
+          name="attached_files" // This should be 'attached_files'
           onChange={handleAttachedFilesChange}
           multiple
         />
-        {formData.attachedFiles.length > 0 && (
+        {formData.attached_files?.length > 0 && (
           <div className="attached-files">
             <h4>Attached Files:</h4>
             <ul>
-              {formData.attachedFiles.map((file, index) => (
+              {formData.attached_files.map((file, index) => (
                 <li key={index}>{file.name}</li>
               ))}
             </ul>

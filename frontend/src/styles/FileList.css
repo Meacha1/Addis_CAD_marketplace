@@ -148,7 +148,14 @@ div.card-body > div.info2 > div > p {
 
 .premium-tag,
 .free-tag {
-  opacity: 1;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  z-index: 1; /* Bring the tags in front */
+  opacity: 0; /* Hide by default */
   transition: opacity 0.3s ease;
 }
 
