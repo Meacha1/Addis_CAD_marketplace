@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/BeVip.css';
+import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import telebirr from '../assets/images/telebirr.png';
 import cbebirr from '../assets/images/cbebirr.png';
@@ -8,6 +9,7 @@ function BeVip({ isAuthenticated, ...props }) {
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [showTransactionForm, setShowTransactionForm] = useState(false);
   const [showTransactionForm1, setShowTransactionForm1] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     transaction_number: '',
   });
@@ -33,7 +35,7 @@ function BeVip({ isAuthenticated, ...props }) {
 
     // Build the URL with the transaction_number and price parameters
     const transactionNumber = formData.transaction_number;
-    const url = `${process.env.REACT_APP_API_URL}/api/check-transaction/buy/${transactionNumber}/${price}/${userId}/123/`;
+    const url = `${process.env.REACT_APP_API_URL}/api/check-transaction/vipSubscription/${transactionNumber}/${price}/${userId}/${userId}/`;
 
     // Send a GET request with the transaction_number and price included in the URL
     fetch(url, {
@@ -51,6 +53,7 @@ function BeVip({ isAuthenticated, ...props }) {
           alert('The transaction number has already been used.');
         } else if (message === 'You have completed a successful purchase.') {
           alert('You have completed a successful purchase.');
+          navigate(-1)
         } else if (message == "The transaction number does not exist in the database.") {
           alert('The transaction number does not exist in the database.')
         }

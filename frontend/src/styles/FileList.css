@@ -146,7 +146,16 @@ div.card-body > div.info2 > div > p {
   opacity: 1;
 }
 
-.premium-tag,
+.premium-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  z-index: 1; /* Bring the tags in front */
+}
+
 .free-tag {
   position: absolute;
   top: 10px;
@@ -155,8 +164,6 @@ div.card-body > div.info2 > div > p {
   height: 30px;
   background-size: cover;
   z-index: 1; /* Bring the tags in front */
-  opacity: 0; /* Hide by default */
-  transition: opacity 0.3s ease;
 }
 
 /* Pagination Container */

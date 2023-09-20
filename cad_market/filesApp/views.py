@@ -4,8 +4,6 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.authentication import SessionAuthentication
 from .models import File, Purchase, Review, AttachedFile
 from users.models import UserCreate
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from .serializers import FileSerializer, PurchaseSerializer, ReviewSerializer, AttachedFileSerializer
 from django.http import Http404
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -13,11 +11,9 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 import re, json
 from django.db.models import Avg
-from django.db import transaction
 from decimal import Decimal
 from datetime import datetime, timedelta
-
-
+from django.db.models import Q
 
 
 class FileListView(generics.ListCreateAPIView):
@@ -180,14 +176,13 @@ def check_transaction_number(request,request_type, transaction_number, price, bu
                 else:
                     return Response({'message': 'The money you transfered is less than the price.'}, status=status.HTTP_400_BAD_REQUEST)
             elif is_transaction_Number_valid and request_type == 'vipSubscription':
-                print(f'Transaction number {transaction_number} exists in the database.')
-                print(f'Buyer id is {buyer_id}')
-                print(f'File id is {file_id}')
                 # convert the price to Decimal
                 price = Decimal(price)
                 if purchase.transaction_amount >= price: # if the money transfered is greater than or equal to the minimum subscription price
                     owner = UserCreate.objects.get(id=buyer_id)
                     owner.is_vip = True
+                    purchase.buyer_id = buyer_id
+                    purchase.file_id = file_id
                     owner.vip_subscription_date = purchase.transaction_date
                     if price >= 5 and price < 10:
                         owner.vip_subscription_expiration_date = datetime.now() + timedelta(days=30)
@@ -196,6 +191,7 @@ def check_transaction_number(request,request_type, transaction_number, price, bu
                     elif price >= 20:
                         owner.vip_subscription_expiration_date = datetime.now() + timedelta(days=90)
                     owner.save()
+                    purchase.save()
                     print('You have completed a successful purchase.')
                     return Response({'message': 'You have completed a successful purchase.'}, status=status.HTTP_200_OK)
                 else:
@@ -260,7 +256,25 @@ class AttachedFileListView(generics.ListAPIView):
         # Assuming you pass the parent file's ID in the URL as a parameter
         parent_file_id = self.kwargs['parent_file_id']
         return AttachedFile.objects.filter(parent_file__id=parent_file_id)
-    
+
+
+class FileSearchView(generics.ListAPIView):
+    serializer_class = FileSerializer
+
+    def get_queryset(self):
+        search_query = self.request.query_params.get('search_query', '')
+        category = self.request.query_params.get('category', '')
+
+        # Build a query using the Q object to search in both title and description
+        queryset = File.objects.filter(
+            Q(title__icontains=search_query) | Q(description__icontains=search_query)
+        )
+
+        # Filter by category if it's provided
+        if category:
+            queryset = queryset.filter(category__icontains=category)
+
+        return queryset
 
 # class PurchaseListView(generics.ListCreateAPIView):
 #     queryset = Purchase.objects.all()
