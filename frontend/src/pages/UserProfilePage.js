@@ -2,16 +2,16 @@ import { getUserInfoById } from '../utils/getUserInfo';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import ProfessionalFileLists from '../components/ProfessionalFileLists';
 import '../styles/UserProfile.css';
 import { Link } from 'react-router-dom';
 import defaultAvatar from '../assets/images/user.png';
 
 
-const UserProfilePage = () => {
-  const { id } = useParams();
+const UserProfilePage = ({isAuthenticated, ...props}) => {
+  const id= props.user.id;
   const [avatarURL, setAvatarURL] = useState(defaultAvatar);
   const [user, setUser] = useState(null);
   const [numberOfFilesUploaded, setNumberOfFilesUploaded] = useState(0);
@@ -72,6 +72,7 @@ const UserProfilePage = () => {
   };
 
   const sale_count = user?.sale_count
+  const sale_amount = user?.sale_amount
 
   return (
     <>
@@ -95,7 +96,7 @@ const UserProfilePage = () => {
                 <p>Number of files uploaded: <span>{numberOfFilesUploaded}</span> </p>
                 <p>Average rating: <span>{average_rating}</span> </p>
                 <p>Number of files sold: <span>{sale_count}</span> </p>
-                <p>Total amount of money earned: <span>0</span> Birr </p>
+                <p>Total amount of money earned: <span>{sale_amount}</span> Birr </p>
               </div>
               <button className="upload">
                 <Link
@@ -116,4 +117,9 @@ const UserProfilePage = () => {
   );
 };
 
-export default UserProfilePage;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps)(UserProfilePage);

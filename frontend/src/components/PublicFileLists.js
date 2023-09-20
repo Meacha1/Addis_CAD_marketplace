@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import StarRating from './StarRating';
 import axios from 'axios';
 
-function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated }) {
+function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated, ...props }) {
   const [files, setFiles] = useState([]);
   const [isAdmin, setIsAdmin] = useState({});
   const [user, setUser] = useState({}); // To store user info
@@ -15,7 +15,7 @@ function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated }) {
   const [review, setReview] = useState([]);
   const [data, setData] = useState([]); // To store the list of files
 
-  const currentUserId = useParams();
+  const currentUserId = props.user.id;
 
   useEffect(() => {
     getFiles();
@@ -146,7 +146,7 @@ function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated }) {
                 {/*<p className='card-text'>isAdmin: {isAdmin[file.owner] ? 'Yes' : 'No'}</p>*/}
               </div>
               <div className='info2'>
-                <p className='card-text'>Price: {file.price}</p>
+              {!isAdmin[file.owner] &&<p className='card-text'>Price: {file.price}</p>}
                 <div className='category'>
                   <p className='card-text'>{file.category}</p>
                 </div>
@@ -192,6 +192,7 @@ function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated }) {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(PublicFileLists);

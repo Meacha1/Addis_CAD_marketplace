@@ -4,9 +4,10 @@ import '../styles/FileDetail.css';
 import BuyFile from './BuyFile';
 import { getUserInfoById } from '../utils/getUserInfo';
 import StarRating from './StarRating';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
-const PublicFileDetail = ({ files }) => {
+const PublicFileDetail = ({ files, isAuthenticated, ...props }) => {
   const { fileId } = useParams();
   const [file, setFile] = useState(null);
   const [isVip, setIsVip] = useState(false);
@@ -18,8 +19,7 @@ const PublicFileDetail = ({ files }) => {
   const [associatedFiles, setAssociatedFiles] = useState([]); // State for associated files
 
   const location = useLocation();
-  let { currentUserId } = location.state;
-  currentUserId = currentUserId.userId;
+  let currentUserId = props.user.id;
   const { isAdmin } = location.state;
 
   useEffect(() => {
@@ -280,4 +280,9 @@ const PublicFileDetail = ({ files }) => {
   );
 };
 
-export default PublicFileDetail;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps)(PublicFileDetail);

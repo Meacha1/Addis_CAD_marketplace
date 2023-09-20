@@ -5,14 +5,18 @@ import '../styles/UploadFile.css';
 import axios from 'axios';
 
 function FileUpdate() {
-  const [fileChanged, setFileChanged] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     category: '',
-    file: null,
     price: 0,
+    file: null,
+    thumbnail: null,
+    attachedFiles: [],
   });
+  const [thumbnailChanged, setThumbnailChanged] = useState(false);
+  const [attachedFilesChanged, setAttachedFilesChanged] = useState(false);
+  const [fileChanged, setFileChanged] = useState(false);
 
   const navigate = useNavigate();
   const fileId = useParams().fileId;
@@ -30,7 +34,6 @@ function FileUpdate() {
           title: fileData.title,
           description: fileData.description,
           category: fileData.category,
-          file: fileData.file,
           price: fileData.price,
         });
       } catch (error) {
@@ -55,18 +58,49 @@ function FileUpdate() {
     });
     
     setFileChanged(true);
-  }
+  };
+
+  const handleThumbnailChange = (e) => {
+    setFormData({
+      ...formData, 
+      thumbnail: e.target.files[0]
+    });
+    setThumbnailChanged(true);
+    // Handle thumbnail change and update state
+
+  };
+
+  const handleAttachedFilesChange = (e) => {
+    const attachedFiles = Array.from(e.target.files);
+    setFormData({
+      ...formData,
+      attachedFiles: attachedFiles,
+    });
+    setAttachedFilesChanged(true);
+    // Handle attached files change and update state
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formPayload = new FormData();
 
-    // Only include file if changed
     if(fileChanged) {
       formPayload.append('file', formData.file);
     }
+  
+    if(thumbnailChanged) {
+      formPayload.append('thumbnail', formData.thumbnail);
+    }
+  
+    if(attachedFilesChanged) {
+      formData.attachedFiles.forEach((file) => {
+        formPayload.append('attached_files', file);
+      });
+    }
 
+    // Only include fields that have been changed
     formPayload.append('title', formData.title);
     formPayload.append('description', formData.description);
     formPayload.append('category', formData.category);
@@ -89,7 +123,7 @@ function FileUpdate() {
 
   return (
     <div className="form-container">
-       <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <input
           type="text"
           name="title"
@@ -121,12 +155,35 @@ function FileUpdate() {
           onChange={handleChange}
           placeholder="Price"
         />
-
+        <h4>Thumbnail:</h4>
+        <input
+          type="file"
+          name="thumbnail"
+          onChange={handleThumbnailChange}
+        />
+        <h4>The main file:</h4>
         <input
           type="file"
           name="file"
           onChange={handleFileChange}
         />
+        <h4>Attached Files:</h4>
+        <input
+          type="file"
+          name="attached_files"
+          onChange={handleAttachedFilesChange}
+          multiple
+        />
+        {formData.attachedFiles.length > 0 && (
+          <div className="attached-files">
+            <h4>Attached Files:</h4>
+            <ul>
+              {formData.attachedFiles.map((file, index) => (
+                <li key={index}>{file.name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <button type="submit">Upload File</button>
       </form>

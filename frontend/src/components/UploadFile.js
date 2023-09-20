@@ -17,7 +17,7 @@ function UploadFile() {
     description: '',
     category: '',
     file: null, // For the parent file
-    price: '',
+    price: '0.00',
     owner: owner,
     is_premium: false,
     thumbnail: null, // For the thumbnail
@@ -104,7 +104,7 @@ function UploadFile() {
   
       if (response.status === 201) {
         console.log('File uploaded successfully!');
-        navigate(`/profile/${owner}`);
+        navigate(-1);
       } else {
         console.error('File upload failed:', response.data);
         // Handle error and display to the user

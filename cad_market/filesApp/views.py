@@ -91,15 +91,6 @@ def handle_sms(request):
         buyer_phone = '+' + buyer_phone_match.group(1)  # Add "+" before the phone number
         message = content  # Use the entire content as the message
 
-        expiry_date = transaction_date  # Initialize expiry date as transaction date
-
-        if 5 <= transaction_amount < 10:  # 5 birr for 7 days
-            expiry_date += timedelta(days=7)
-        elif 10 <= transaction_amount < 20:  # 10 birr for 14 days
-            expiry_date += timedelta(days=14)
-        elif transaction_amount >= 20:  # 20 birr for 30 days
-            expiry_date += timedelta(days=30)
-
         # Create a data dictionary for the serializer
         serializer_data = {
             'buyer_phone': buyer_phone,
@@ -153,6 +144,7 @@ def check_transaction_number(request,request_type, transaction_number, price, bu
                     owner = UserCreate.objects.get(id=sold_file.owner_id)
                     owner.sale_count += 1
                     sold_file.num_of_sales += 1
+                    owner.sale_amount += price
                     purchase.save()
                     sold_file.save()
                     owner.save()

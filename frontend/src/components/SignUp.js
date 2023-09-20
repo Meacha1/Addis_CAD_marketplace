@@ -126,7 +126,6 @@ const Signup = ({ signup, isAuthenticated }) => {
               onChange={(e) => onChange(e)}
             >
               <option value="user">User</option>
-              <option value="admin">Admin</option>
               <option value="professional">Professional</option>
             </select>
           </div>

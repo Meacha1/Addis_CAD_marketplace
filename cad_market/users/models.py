@@ -63,6 +63,7 @@ class UserCreate(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_vip = models.BooleanField(default=False)
     sale_count = models.IntegerField(default=0)
+    sale_amount = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     vip_subscription_date = models.DateTimeField(default=None, null=True, blank=True)
     vip_subscription_expiration_date = models.DateTimeField(default=None, null=True, blank=True)
 

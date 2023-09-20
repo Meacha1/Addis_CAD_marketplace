@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Navigation.css';
+import { connect } from 'react-redux';
 import { getUserInfoById } from '../utils/getUserInfo';
 
-function NavigationBar({ userId }) {
+function NavigationBar({isAuthenticated, ...props }) {
   const [isOpen, setIsOpen] = useState(false);
   const [user_type, setUserType] = useState('');
+
+  const userId = props.user.id;
+
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -75,4 +79,9 @@ function NavigationBar({ userId }) {
   }
 }
 
-export default NavigationBar;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps)(NavigationBar);
