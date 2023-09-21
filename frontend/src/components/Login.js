@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';
 import { loginUser } from '../utils/auth';
-import axios from 'axios';
 import '../styles/Login.css';
 
 const Login = ({ login, isAuthenticated, user }) => {
@@ -23,7 +22,6 @@ const Login = ({ login, isAuthenticated, user }) => {
 
     handleLogin(e); // Pass the event object to the handleLogin function
     login(email, password);
-    
   };
 
   const handleLogin = async (event) => {
@@ -37,7 +35,7 @@ const Login = ({ login, isAuthenticated, user }) => {
 
       if (response.message === 'Login successful!') {
         // Set the user information in the context
-        const { id, email } = response.user; // Destructure user object
+        const { id } = response.user; // Destructure user object
         try {
           if (id === null) {
             navigate(`/login`);
@@ -54,11 +52,7 @@ const Login = ({ login, isAuthenticated, user }) => {
       console.error(error);
     }
   };
-
-  const userinfo = JSON.stringify(user);
-
-  console.log(`user: ${userinfo}`)
-
+ 
   return (
     <div className='container_login'>
       <h1>Sign In</h1>

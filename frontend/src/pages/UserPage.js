@@ -10,8 +10,8 @@ function UserPage({isAuthenticated, ...props}) {
   const [searchQuery, setSearchQuery] = useState(''); // State for search query
   const [selectedCategory, setSelectedCategory] = useState(''); // State for selected category
 
-  const userId = props.user.id;
-  const userName = props.user.first_name;
+  const userId = props.user?.id;
+  const userName = props.user?.first_name;
 
   return (
     <>

@@ -174,12 +174,22 @@ export const login = (email, password) => async dispatch => {
 
         dispatch(load_user());
     } catch (err) {
-        if (body !== null && body !== undefined) {
-            alert('Invalid Credentials');
-        }      
         dispatch({
             type: LOGIN_FAIL
-        })
+        });
+
+        if (err.response) {
+            if (err.response.status === 400) {
+                // Invalid credentials
+                toast.error('Invalid email or password. Please try again.');
+            } else {
+                // Generic error message for other errors
+                toast.error('Login failed. Please try again.');
+            }
+        } else {
+            // Network error, server is not reachable
+            toast.error('Network error. Please check your internet connection and try again.');
+        }
     }
 };
 
@@ -207,8 +217,19 @@ export const signup = (first_name, last_name, email, phone_number, password, re_
         dispatch({
             type: SIGNUP_FAIL
         });
-        // Notify the user of the signup failure
-        toast.error('Signup failed. Please try again.');
+
+        if (err.response) {
+            if (err.response.status === 400 && err.response.data.email) {
+                // User with this email already exists
+                toast.error('This email is already registered. Please use a different email.');
+            } else {
+                // Generic error message for other errors
+                toast.error('Signup failed. Please try again.');
+            }
+        } else {
+            // Network error, server is not reachable
+            toast.error('Network error. Please check your internet connection and try again.');
+        }
     }
 };
 

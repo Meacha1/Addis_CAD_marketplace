@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth import logout
-
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.authentication import SessionAuthentication
 from .models import UserCreate
 from .serializers import UserCreateSerializer
 import jwt
@@ -20,6 +21,8 @@ class UserRegisterView(APIView):
             return Response(UserCreateSerializer(user).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@authentication_classes([SessionAuthentication])
+@permission_classes([])
 class UserLoginView(APIView):
     def post(self, request):
         email = request.data.get('email')
@@ -55,6 +58,8 @@ class UserLogoutView(APIView):
 
 
 
+@authentication_classes([SessionAuthentication])
+@permission_classes([])
 class FindUserView(APIView):
     def post(self, request):
         email = request.data.get('email')

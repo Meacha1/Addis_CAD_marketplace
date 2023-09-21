@@ -156,6 +156,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'meachattd@gmail.com'
 EMAIL_HOST_PASSWORD = 'uvuefizmrjtwmbnd'
 EMAIL_USE_TLS = True
+EMAIL_TIMEOUT = 60
+
 
 
 # Password validation
@@ -249,6 +251,7 @@ DJOSER = {
     'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
+    #'ACTIVATION_TIMEOUT': 86400,
     'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
     'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://localhost:8000/google', 'http://localhost:8000/facebook'],
     'SERIALIZERS': {
