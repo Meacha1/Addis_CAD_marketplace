@@ -45,45 +45,49 @@ Before you begin, make sure you have the following installed:
    ```bash
    git clone https://github.com/your-username/addis-cad-marketplace.git
    cd addis-cad-marketplace
-Frontend Setup
+2. **Frontend Setup**
 
-bash
-Copy code
-cd frontend
-npm install
-Backend Setup
+   ```bash
+   bash
+   Copy code
+   cd frontend
+   npm install
 
-bash
-Copy code
-cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-pip install -r requirements.txt
-Database Configuration
+3. **Backend Setup**
+
+   ```bash
+   Copy code
+   cd backend
+   python -m venv venv
+   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+   pip install -r requirements.txt
+
+4. **Database Configuration**
 
 Create a MySQL database and update your Django settings in backend/addis_cad_marketplace/settings.py to use your database configuration.
 
-Migrate Database
+5. **Migrate Database**
 
-bash
-Copy code
-python manage.py makemigrations
-python manage.py migrate
-Start the Development Servers
+   ```bash
+   Copy code
+   python manage.py makemigrations
+   python manage.py migrate
 
-Frontend:
+6. **Start the Development Servers**
 
-bash
-Copy code
-cd frontend
-npm start
-Backend:
+- Frontend:
 
-bash
-Copy code
-cd backend
-python manage.py runserver
-Access the Application
+   ```bash
+   Copy code
+   cd frontend
+   npm start
+- Backend:
+
+   ```bash
+   Copy code
+   cd backend
+   python manage.py runserver
+7. **Access the Application**
 
 Open your web browser and navigate to http://localhost:3000 to access the Addis CAD Marketplace.
 
