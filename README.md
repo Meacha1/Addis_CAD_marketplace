@@ -2,7 +2,7 @@
 
 Welcome to **Addis CAD Marketplace**, your one-stop destination for CAD models and designs. This platform allows users to browse, upload, and purchase CAD files for various applications. Whether you're an engineer, architect, or hobbyist, you'll find a wide range of CAD models to meet your needs.
 
-![Addis CAD Marketplace Screenshot](screenshot.png)
+![Addis CAD Marketplace Screenshot](frontend/src/assets/images/Capture.JPG) 
 
 ## Table of Contents
 
