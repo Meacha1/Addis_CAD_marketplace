@@ -88,13 +88,13 @@ Access the Application
 Open your web browser and navigate to http://localhost:3000 to access the Addis CAD Marketplace.
 
 Usage
-Register as a new user or log in if you already have an account.
-Browse and search for CAD models based on your requirements.
-Upload your own CAD models to share with the community.
-Purchase and download CAD models securely.
-Explore user profiles to see their listings and reviews.
-Activate your account through the email confirmation link.
-Contributing
+- Register as a new user or log in if you already have an account.
+- Browse and search for CAD models based on your requirements.
+- Upload your own CAD models to share with the community.
+- Purchase and download CAD models securely.
+- Explore user profiles to see their listings and reviews.
+- Activate your account through the email confirmation link.
+## Contributing
 We welcome contributions from the community! If you'd like to contribute to this project, please follow these guidelines:
 
 1. Fork the repository on GitHub.
@@ -103,10 +103,10 @@ We welcome contributions from the community! If you'd like to contribute to this
 4. Push your changes to your fork.
 5. Submit a pull request to the main repository.
 
-License
+## License
 This project is licensed under the MIT License.
 
-Acknowledgments
-. Special thanks to our instructors and mentors for their guidance and support.
-. We appreciate the open-source community for inspiring and providing valuable resources.
+## Acknowledgments
+- Special thanks to our instructors and mentors for their guidance and support.
+- We appreciate the open-source community for inspiring and providing valuable resources.
 Thank you for choosing Addis CAD Marketplace!
