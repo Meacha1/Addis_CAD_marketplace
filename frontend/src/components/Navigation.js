@@ -6,23 +6,9 @@ import { getUserInfoById } from '../utils/getUserInfo';
 
 function NavigationBar({isAuthenticated, ...props }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [user_type, setUserType] = useState('');
 
   const userId = props.user.id;
-
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const userInfo = await getUserInfoById(userId);
-        setUserType(userInfo?.user_type);
-        console.log(user_type);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchUserInfo(userId);
-  }, [userId, user_type]);
+  const user_type = props.user.user_type;
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);

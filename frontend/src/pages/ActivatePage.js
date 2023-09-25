@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 import { connect } from 'react-redux';
 import { verify } from '../actions/auth';
 import { toast } from 'react-toastify';
@@ -33,24 +35,28 @@ const Activate = ({ verify }) => {
     }
 
     return (
-        <div className='container'>
-            <div 
-                className='d-flex flex-column justify-content-center align-items-center'
-                style={{ marginTop: '200px' }}
-            >
-                <h1>Verify your Account:</h1>
-                <button
-                    onClick={() => {
-                        navigate('/'); // Example: Navigate to home on button click
-                    }}
-                    style={{ marginTop: '50px' }}
-                    type='button'
-                    className='btn btn-primary'
+        <>
+            <Header />
+            <div className='container'>
+                <div 
+                    className='d-flex flex-column justify-content-center align-items-center'
+                    style={{ marginTop: '200px' }}
                 >
-                    Verify
-                </button>
+                    <h1>Verify your Account:</h1>
+                    <button
+                        onClick={() => {
+                            navigate('/'); // Example: Navigate to home on button click
+                        }}
+                        style={{ marginTop: '50px' }}
+                        type='button'
+                        className='btn btn-primary'
+                    >
+                        Verify
+                    </button>
+                </div>
             </div>
-        </div>
+            <Footer />
+        </>
     );
 };
 

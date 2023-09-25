@@ -44,7 +44,7 @@ Before you begin, make sure you have the following installed:
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/your-username/addis-cad-marketplace.git
+   git clone https://github.com/Meacha1/Addis_CAD_marketplace
    cd addis-cad-marketplace
 2. **Frontend Setup**
 

@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signup } from '../actions/auth';
 import '../styles/SignUp.css';
-import axios from 'axios';
 import eyeIcon from '../assets/images/icons8-eye-30.png';
 
 const Signup = ({ signup, isAuthenticated }) => {
