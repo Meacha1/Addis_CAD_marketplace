@@ -1,7 +1,6 @@
 import { getUserInfoById } from '../utils/getUserInfo';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Navigation from '../components/Navigation';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';

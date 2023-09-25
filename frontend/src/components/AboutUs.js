@@ -16,7 +16,7 @@ const AboutUs = () => {
       <div className="cards">
         <div className="profile-card">
           <img src={myImage} alt="Person 1" />
-          <h2>Meacha Teshome</h2>
+          <h2>Meacha Tafa</h2>
           <h3>Backend Developer</h3>
           <h4>Skills:</h4>
           <ul>
@@ -39,8 +39,8 @@ const AboutUs = () => {
         </div>
         <div className="profile-card">
         <img src={elphazImage} alt="Person 1" />
-          <h2>Meacha Teshome</h2>
-          <h3>Web Developer</h3>
+          <h2>Elphaz Bekele</h2>
+          <h3>Backend Developer</h3>
           <h4>Skills:</h4>
           <ul>
             <li>node.js</li>

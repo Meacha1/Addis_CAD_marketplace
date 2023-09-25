@@ -14,6 +14,7 @@ Welcome to **Addis CAD Marketplace**, your one-stop destination for CAD models a
 - [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
+- [Contact](#contact)
 
 ## Features
 
@@ -114,3 +115,10 @@ This project is licensed under the MIT License.
 - Special thanks to our instructors and mentors for their guidance and support.
 - We appreciate the open-source community for inspiring and providing valuable resources.
 Thank you for choosing Addis CAD Marketplace!
+
+## Contact
+
+For any questions, feedback, or inquiries, please feel free to reach out to us:
+
+- Meacha Tafa: [LinkedIn](https://www.linkedin.com/in/meacha-teshome/)
+- Elphaz Bekele: [LinkedIn](https://www.linkedin.com/in/elphazshiferaw/)

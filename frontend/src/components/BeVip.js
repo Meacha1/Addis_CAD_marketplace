@@ -54,9 +54,9 @@ function BeVip({ isAuthenticated, ...props }) {
         } else if (message === 'You have completed a successful purchase.') {
           alert('You have completed a successful purchase.');
           navigate(-1)
-        } else if (message == "The transaction number does not exist in the database.") {
+        } else if (message === "The transaction number does not exist in the database.") {
           alert('The transaction number does not exist in the database.')
-        } else if (message == "The money you transfered is less than the price.") {
+        } else if (message === "The money you transfered is less than the price.") {
           alert('The money you transferred is less than package you have selected.')
         }
       })

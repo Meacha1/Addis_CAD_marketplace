@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/ContactUs.css'; // Import corresponding CSS file
+import '../styles/ContactUs.css';
 import elphazImage from '../assets/images/elphaz.jpg';
 import myImage from '../assets/images/My_pic.jpg';
 import linkedinIcon from '../assets/images/linkedin.png';
