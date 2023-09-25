@@ -113,20 +113,25 @@ const PublicFileDetail = ({ files, isAuthenticated, ...props }) => {
       navigate('/be_vip');
       return;
     }
-
+  
     if (file) {
       try {
         const response = await fetch(file.file);
         const fileData = await response.blob();
         const url = URL.createObjectURL(fileData);
+        
+        // Extract the file extension from the URL or file title
+        const fileExtension = file.file.split('.').pop() || 'file';
+        
+        // Set the download attribute to include the file extension
         const a = document.createElement('a');
         a.href = url;
-        a.download = file.title;
+        a.download = `${file.title}.${fileExtension}`;
         a.style.display = 'none';
-
+  
         document.body.appendChild(a);
         a.click();
-
+  
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
       } catch (error) {
