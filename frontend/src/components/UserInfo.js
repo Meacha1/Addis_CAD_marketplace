@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import defaultAvatar from '../assets/images/user.png';
+import axios from 'axios';
 
 const UserInfo = ({ user, owner }) => {
   const [avatarURL, setAvatarURL] = useState(defaultAvatar);
@@ -17,23 +18,26 @@ const UserInfo = ({ user, owner }) => {
     formData.append('avatar', selectedFile);
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/uploadAvatar/${owner}/`, {
-        headers: {
-          Authorization: `JWT ${localStorage.getItem('access')}`,
-        },
-        method: 'PUT',
-        body: formData,
-      });
-
-      if (response.ok) {
-        const data = await response.json();
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/users/uploadAvatar/${owner}/`,
+        formData,
+        {
+          headers: {
+            Authorization: `JWT ${localStorage.getItem('access')}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+    
+      if (response.status === 200) {
+        const data = response.data;
         setAvatarURL(data.avatar);
       } else {
         console.error('Failed to upload avatar');
       }
     } catch (error) {
       console.error('Error uploading avatar:', error);
-    }
+    }    
   };
 
   return (

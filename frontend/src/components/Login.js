@@ -3,14 +3,20 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';
+import eyeIcon from '../assets/images/icons8-eye-30.png';
 import '../styles/Login.css';
 
 const Login = ({ login, isAuthenticated, ...props }) => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
   const { email, password } = formData;
 
@@ -44,7 +50,8 @@ const Login = ({ login, isAuthenticated, ...props }) => {
         </div>
         <div className='form-group'>
           <input
-            type='password'
+            className="form-control"
+            type={passwordVisible ? 'text' : 'password'}
             placeholder='Password'
             name='password'
             value={password}
@@ -52,6 +59,13 @@ const Login = ({ login, isAuthenticated, ...props }) => {
             minLength='6'
             required
           />
+            <span className="password-toggle" onClick={togglePasswordVisibility}>
+              {passwordVisible ? (
+                <img src={eyeIcon} alt="Hide Password" />
+              ) : (
+                <img src={eyeIcon} alt="Show Password" />
+              )}
+            </span>
         </div>
         <button className='login' type='submit'>
           Login

@@ -8,6 +8,7 @@ import ProfessionalFileLists from '../components/ProfessionalFileLists';
 import '../styles/UserProfile.css';
 import { Link } from 'react-router-dom';
 import defaultAvatar from '../assets/images/user.png';
+import axios from 'axios';
 
 
 const UserProfilePage = ({isAuthenticated, ...props}) => {
@@ -52,16 +53,19 @@ const UserProfilePage = ({isAuthenticated, ...props}) => {
     formData.append('avatar', selectedFile);
 
     try {
-      const response = await fetch(`/users/uploadAvatar/${owner}/`, {
-        headers: {
-          Authorization: `JWT ${localStorage.getItem('access')}`,
-        },
-        method: 'PUT',
-        body: formData,
-      });
-
-      if (response.ok) {
-        const data = await response.json();
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/users/uploadAvatar/${owner}/`,
+        formData,
+        {
+          headers: {
+            Authorization: `JWT ${localStorage.getItem('access')}`,
+            'Content-Type': 'multipart/form-data', // Make sure to set Content-Type as multipart/form-data for file uploads
+          },
+        }
+      );
+    
+      if (response.status === 200) {
+        const data = response.data;
         setAvatarURL(data.avatar);
       } else {
         console.error('Failed to upload avatar');

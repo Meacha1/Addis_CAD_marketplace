@@ -9,13 +9,16 @@ import axios from 'axios';
 
 const PublicFileDetail = ({ files, isAuthenticated, ...props }) => {
   const { fileId } = useParams();
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState({});
   const [isVip, setIsVip] = useState(false);
   const [is_premium, setIsPremium] = useState(false);
   const [review, setReview] = useState([]);
   const navigate = useNavigate();
   const [reviewerNames, setReviewerNames] = useState({});
   const [associatedFiles, setAssociatedFiles] = useState([]); // State for associated files
+  const [reviewComment, setReviewComment] = useState('');
+  const [reviewRating, setReviewRating] = useState(0);
+  
 
   const location = useLocation();
   let currentUserId = props.user.id;
@@ -34,16 +37,18 @@ const PublicFileDetail = ({ files, isAuthenticated, ...props }) => {
           Authorization: `JWT ${localStorage.getItem('access')}`,
         },
       });
-      const data = await response.json();
-      setReview(data.reviews);
-      console.log(data);
+      if (response.ok) {
+        const data = await response.json();
+        setReview(data.reviews);
+        console.log(data);
+      } else {
+        console.error('Failed to fetch reviews:', response.status);
+      }
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching reviews:', error);
     }
   };
 
-  const [reviewComment, setReviewComment] = useState('');
-  const [reviewRating, setReviewRating] = useState(0);
 
   useEffect(() => {
     const fetchFile = async () => {
@@ -141,7 +146,6 @@ const PublicFileDetail = ({ files, isAuthenticated, ...props }) => {
 
   const handleSubmitReview = async (event) => {
     event.preventDefault();
-
     const hasSubmittedReview = review.some((reviewItem) => reviewItem.user === currentUserId);
 
     if (currentUserId === file.owner) {
@@ -162,19 +166,15 @@ const PublicFileDetail = ({ files, isAuthenticated, ...props }) => {
     };
 
     try {
-      const response = await fetch('${process.env.REACT_APP_API_URL}/api/Review/', {
-        credentials: 'include',
-        method: 'POST',
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/Review/`, reviewData, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `JWT ${localStorage.getItem('access')}`,
         },
-        body: JSON.stringify(reviewData),
+        withCredentials: true, // Include credentials (cookies) with the request
       });
-
+  
       if (response.status === 201) {
-        // Review was successfully created
-        // You can update the UI or show a success message here
         window.location.reload();
       } else {
         console.error('Failed to create review:', response.status);

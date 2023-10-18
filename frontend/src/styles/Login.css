@@ -115,3 +115,7 @@ a:hover {
 #root > div.App > div > div.container_login > p {
   color:black;
 }
+
+.password-input {
+  position: relative;
+}

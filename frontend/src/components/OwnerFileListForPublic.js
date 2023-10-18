@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/UserFileLists.css';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import { getUserInfoById } from '../utils/getUserInfo';
 import { connect } from 'react-redux';
 import StarRating from './StarRating';
@@ -9,11 +8,9 @@ import axios from 'axios';
 
 function OwnerFileListForPublic({ owner, onFilesCountChange, onAverage_rating,isAuthenticated, ...props }) {
   const [files, setFiles] = useState([]);
-  const location = useLocation();
   const [isAdmin, setIsAdmin] = useState({});
   const ownerId = owner;
-  let { currentUserId } = location.state;
-  currentUserId = currentUserId.userId;
+  let currentUserId = props.user.id;
 
   useEffect(() => {
     if (ownerId) {
@@ -37,7 +34,7 @@ function OwnerFileListForPublic({ owner, onFilesCountChange, onAverage_rating,is
 
   const getFiles = async () => {
     try {
-      const response = await axios.get(`/api/UserFileList/${ownerId}/`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/UserFileList/${ownerId}/`, {
         headers: {
           Authorization: `JWT ${localStorage.getItem('access')}`,
         },

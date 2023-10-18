@@ -42,8 +42,8 @@ function BuyFilePage({ isAuthenticated, ...props }) {
         const data = await response.json();
         const message = data.message
         console.log(message)
-        if (message === 'The transaction number has already been used.') {
-          alert("The transaction number has already been used.")
+        if (message === 'The transaction number has already been used.' || message === 'The transaction number does not exist in the database.') {
+          alert("The transaction number has already been used or the transaction number does not exist in the database.")
         }
         else if (message === 'You have completed a successful purchase.') {
           alert("You have completed a successful purchase.")
@@ -60,7 +60,7 @@ function BuyFilePage({ isAuthenticated, ...props }) {
   useEffect(() => {
     const fetchFile = async () => {
       try {
-        const response = await fetch(`/api/FileDetail/${fileId}/`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/FileDetail/${fileId}/`, {
           headers: {
             Authorization: `JWT ${localStorage.getItem('access')}`,
           },
