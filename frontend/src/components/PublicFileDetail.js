@@ -13,7 +13,6 @@ const PublicFileDetail = ({ files, isAuthenticated, ...props }) => {
   const [isVip, setIsVip] = useState(false);
   const [is_premium, setIsPremium] = useState(false);
   const [review, setReview] = useState([]);
-  const [currentFileIndex, setCurrentFileIndex] = useState(0); // Track the current file index
   const navigate = useNavigate();
   const [reviewerNames, setReviewerNames] = useState({});
   const [associatedFiles, setAssociatedFiles] = useState([]); // State for associated files
@@ -25,12 +24,12 @@ const PublicFileDetail = ({ files, isAuthenticated, ...props }) => {
   useEffect(() => {
     getReview();
     fetchAssociatedFiles(); // Fetch associated files when the component loads
-  }, []);
+  }, [fileId]);
 
 
   const getReview = async () => {
     try {
-      const response = await fetch(`/api/GetReview/${fileId}/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/GetReview/${fileId}/`, {
         headers: {
           Authorization: `JWT ${localStorage.getItem('access')}`,
         },
@@ -49,7 +48,7 @@ const PublicFileDetail = ({ files, isAuthenticated, ...props }) => {
   useEffect(() => {
     const fetchFile = async () => {
       try {
-        const response = await fetch(`/api/FileDetail/${fileId}/`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/FileDetail/${fileId}/`, {
           headers: {
             Authorization: `JWT ${localStorage.getItem('access')}`,
           },
@@ -163,7 +162,7 @@ const PublicFileDetail = ({ files, isAuthenticated, ...props }) => {
     };
 
     try {
-      const response = await fetch('/api/Review/', {
+      const response = await fetch('${process.env.REACT_APP_API_URL}/api/Review/', {
         credentials: 'include',
         method: 'POST',
         headers: {
@@ -232,7 +231,7 @@ const PublicFileDetail = ({ files, isAuthenticated, ...props }) => {
           <ul>
             {associatedFiles.map((associatedFile, index) => (
               <li key={index}>
-                <img src={associatedFile.attached_file} ></img>
+                <img src={associatedFile.attached_file} alt=''></img>
               </li>
             ))}
           </ul>

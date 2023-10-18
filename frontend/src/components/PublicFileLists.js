@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/FileList.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { getUserInfoById } from '../utils/getUserInfo';
 import { connect } from 'react-redux';
 import StarRating from './StarRating';
@@ -15,7 +15,7 @@ function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated, ...pr
   const [review, setReview] = useState([]);
   const [data, setData] = useState([]); // To store the list of files
 
-  const currentUserId = props.user.id;
+  const currentUserId = user?.id || null;
 
   useEffect(() => {
     getFiles();
@@ -24,7 +24,7 @@ function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated, ...pr
 
   const getReview = async (id) => {
     try {
-      const response = await fetch(`/api/GetReview/${id}/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/GetReview/${id}/`, {
         method: 'GET',
         headers: {
           Authorization: `JWT ${localStorage.getItem('access')}`,
@@ -53,7 +53,7 @@ function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated, ...pr
       queryParams.append('category', selectedCategory);
     }
    
-    const response = await axios.get(`/api/FileList/`, {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/FileList/`, {
       headers: {
         Authorization: `JWT ${localStorage.getItem('access')}`,
       },'Content-Type': 'application/json',

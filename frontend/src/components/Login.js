@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';
-import { loginUser } from '../utils/auth';
 import '../styles/Login.css';
 
-const Login = ({ login, isAuthenticated, user }) => {
+const Login = ({ login, isAuthenticated, ...props }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -17,42 +16,17 @@ const Login = ({ login, isAuthenticated, user }) => {
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(`/user`);
+    }
+  }, [isAuthenticated, navigate]);
+
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    handleLogin(e); // Pass the event object to the handleLogin function
     login(email, password);
   };
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
-
-    try {
-      // Attempt to log in the user
-      const response = await loginUser(formData);
-
-      console.log(response);
-
-      if (response.message === 'Login successful!') {
-        // Set the user information in the context
-        const { id } = response.user; // Destructure user object
-        try {
-          if (id === null) {
-            navigate(`/login`);
-          }
-          navigate(`/user/${id}`);
-        } catch (error) {
-          console.error('error in navigate: ', error);
-        }
-      } else {
-        // Show an alert for incorrect credentials
-        alert('Incorrect email or password');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
- 
   return (
     <div className='container_login'>
       <h1>Sign In</h1>

@@ -9,12 +9,10 @@ import Footer from '../components/Footer';
 
 function BuyFilePage({ isAuthenticated, ...props }) {
   const [file, setFile] = useState(null);
-  const [price, setPrice] = useState(null);
   const { fileId } = useParams(); // Get the file ID from the route parameters
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [showTransactionForm, setShowTransactionForm] = useState(false);
   const [showTransactionForm1, setShowTransactionForm1] = useState(false);
-  const [responseMessage, setResponseMessage] = useState(null);
   const [isAuthenticatedToDownload, setIsAuthenticatedToDownload] = useState(false);
   
   const [formData, setFormData] = useState({
@@ -69,7 +67,6 @@ function BuyFilePage({ isAuthenticated, ...props }) {
         });
         const data = await response.json();
         setFile(data);
-        console.log(price);
       } catch (error) {
         console.error(error);
         setFile(null);

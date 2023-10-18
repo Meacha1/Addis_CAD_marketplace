@@ -17,7 +17,7 @@ const UserInfo = ({ user, owner }) => {
     formData.append('avatar', selectedFile);
 
     try {
-      const response = await fetch(`/users/uploadAvatar/${owner}/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/uploadAvatar/${owner}/`, {
         headers: {
           Authorization: `JWT ${localStorage.getItem('access')}`,
         },

@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Navigation.css';
 import { connect } from 'react-redux';
-import { getUserInfoById } from '../utils/getUserInfo';
 
-function NavigationBar({isAuthenticated, ...props }) {
+function NavigationBar({ isAuthenticated, user }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const userId = props.user.id;
-  const user_type = props.user.user_type;
+  const userId = user ? user.id : null;
+  const user_type = user ? user.user_type : null;
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);

@@ -15,7 +15,7 @@ export default function ProfessionalFileLists({ owner, onFilesCountChange, onAve
 
   const getFiles = async () => {
     try {
-      const response = await axios.get(`/api/UserFileList/${ownerId}/`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/UserFileList/${ownerId}/`, {
         headers: {
           Authorization: `JWT ${localStorage.getItem('access')}`,
         },

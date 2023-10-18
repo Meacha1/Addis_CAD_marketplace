@@ -3,7 +3,6 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import OwnerFileListForPublic from '../components/OwnerFileListForPublic';
 import '../styles/UserProfile.css';
 import defaultAvatar from '../assets/images/user.png';
@@ -13,7 +12,6 @@ const UserProfilePage = () => {
   const { ownerId } = useParams();
   const [avatarURL, setAvatarURL] = useState(defaultAvatar);
   const [user, setUser] = useState(null);
-  const location = useLocation();
   const [numberOfFilesUploaded, setNumberOfFilesUploaded] = useState(0);
   const [average_rating, setAverage_rating] = useState(0);
 

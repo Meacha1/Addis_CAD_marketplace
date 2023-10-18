@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "proxy": "https://942f-197-156-86-242.ngrok-free.app",
+  "proxy": "http://localhost:8000",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

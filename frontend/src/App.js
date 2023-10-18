@@ -34,7 +34,7 @@ function App() {
             <Route path="/file/:fileId/update" element={<FileUpdatePage />} />
             <Route path="/profile/:id" element={<UserProfilePage />} />
             <Route path='/file/:fileId' element={<FilePage />} />
-            <Route path='/user/:userId' element={<UserPage />} />
+            <Route path='/user' element={<UserPage />} />
             <Route path='/user_file/:fileId' element={<UserFilePage />} />
             <Route path='/be_vip' element={<BeVipPage />} />
             <Route path='/buy/:fileId' element={<BuyFilePage />} />
