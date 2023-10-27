@@ -48,7 +48,7 @@ const Login = ({ login, isAuthenticated, ...props }) => {
             required
           />
         </div>
-        <div className='form-group'>
+        <div className='password-input'>
           <input
             className="form-control"
             type={passwordVisible ? 'text' : 'password'}

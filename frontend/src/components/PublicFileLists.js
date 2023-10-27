@@ -80,11 +80,13 @@ function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated, ...pr
       setFiles(filteredFiles);
     
       if (filteredFiles.length > 0) {
-        filteredFiles.forEach((file) => {
-          fetchUserInfo(file?.owner);
-          getReview(file?.id);
-        });
-      }
+        await Promise.all(
+          filteredFiles.map(async (file) => {
+            await fetchUserInfo(file?.owner);
+            getReview(file?.id);
+          })
+        );
+      }    
     };
   };
 
@@ -121,13 +123,15 @@ function PublicFileLists({ searchQuery, selectedCategory, isAuthenticated, ...pr
       <div className='files_list'>
         <div className='card-group'>
         {currentFiles.map((file) => (
-          <div key={file.id} className='card-item'>
+          <div key={file?.id} className='card-item'>
             <div className='card-image'>
               {isAdmin[file.owner] && file.is_premium && <div className='premium-tag'></div>}
               {isAdmin[file.owner] && !file.is_premium && <div className='free-tag'></div>}
-              <Link to={`/user_file/${file.id}`} state={{ currentUserId: currentUserId, isAdmin: isAdmin[file.owner] }} className='file-link'>
+              {file.id && (
+              <Link to={`/user_file/${file?.id}`} state={{ currentUserId: currentUserId, isAdmin: isAdmin[file.owner] }} className='file-link'>
                 <img src={`${file.thumbnail}`} alt={`${file.title}`} className='card-img' />
               </Link>
+              )}
             </div>
             <div className='card-body'>
               <div className='info1'>
