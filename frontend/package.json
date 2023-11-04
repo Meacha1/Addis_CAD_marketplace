@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "proxy": "https://addis-cad-marketplace.vercel.app",
+  "proxy": "https://addis-cad-marketplace2-lpqjep286-meachas-projects.vercel.app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
