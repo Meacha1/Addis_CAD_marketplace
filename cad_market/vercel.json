@@ -10,8 +10,8 @@
       }
     },
     {
-      "src": "build",
-      "use": "@vercel/static-build"
+      "src": "/build/(.*)",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
