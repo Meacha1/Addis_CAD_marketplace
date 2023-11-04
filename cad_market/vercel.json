@@ -4,20 +4,20 @@
     {
       "src": "cad_market/wsgi.py",
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.9"
+      }
     },
     {
-      "src": "build",  
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": ""
-      }
+      "src": "build",
+      "use": "@vercel/static-build"
     }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/build/$1"
+      "dest": "/build/static/$1"
     },
     {
       "src": "/(.*)",
