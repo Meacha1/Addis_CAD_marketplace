@@ -7,14 +7,17 @@
       "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
     },
     {
-      "src": "/build/(.*)",
-      "use": "@vercel/static"
+      "src": "build",  
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": ""
+      }
     }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/build/static/$1"
+      "dest": "/build/$1"
     },
     {
       "src": "/(.*)",
