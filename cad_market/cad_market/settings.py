@@ -131,20 +131,36 @@ WSGI_APPLICATION = 'cad_market.wsgi.application'
 #     }
 # }
 
+
+
+# DATABASES = {
+#        'default': {
+#            'ENGINE': 'django.db.backends.mysql',
+#            'NAME': 'userdb3',
+#            'USER': 'root',
+#            'PASSWORD': 'password',
+#            'HOST': 'localhost',
+#            'PORT': '3306',
+#            'OPTIONS': {
+#             'charset': 'utf8mb4',
+#             },
+#             'CONN_MAX_AGE': 86400,
+#        }
+# }
+
 DATABASES = {
-       'default': {
-           'ENGINE': 'django.db.backends.mysql',
-           'NAME': 'userdb3',
-           'USER': 'root',
-           'PASSWORD': 'password',
-           'HOST': 'localhost',
-           'PORT': '3306',
-           'OPTIONS': {
-            'charset': 'utf8mb4',
-            },
-            'CONN_MAX_AGE': 86400,
-       }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'umwqnwyt',
+        'USER': 'umwqnwyt',
+        'PASSWORD': 'D8vGbpPj25UpEr7nKJzSJYaG5ReZ_tgz',
+        'HOST': 'rosie.db.elephantsql.com',
+        'PORT': '5432',
+    }
 }
+
+
+
 
 # Tell Django to use the test database when running tests
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
@@ -157,7 +173,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'meachattd@gmail.com'
 EMAIL_HOST_PASSWORD = 'uvuefizmrjtwmbnd'
 EMAIL_USE_TLS = True
-EMAIL_TIMEOUT = 60
 
 
 
@@ -255,7 +270,7 @@ DJOSER = {
     'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
-    'ACTIVATION_TIMEOUT': 86400,
+    'ACTIVATION_TIMEOUT': 86400, 
     'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
     'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://localhost:8000/google', 'http://localhost:8000/facebook'],
     'SERIALIZERS': {
