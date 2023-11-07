@@ -153,6 +153,10 @@ DATABASES = {
         'PASSWORD': 'D8vGbpPj25UpEr7nKJzSJYaG5ReZ_tgz',
         'HOST': 'rosie.db.elephantsql.com',
         'PORT': '5432',
+        'CONN_MAX_AGE': 600,  # Connection timeout in seconds (optional)
+        'OPTIONS': {
+            'pool_size': 20,  # Maximum number of connections in the pool
+        },
     }
 }
 
