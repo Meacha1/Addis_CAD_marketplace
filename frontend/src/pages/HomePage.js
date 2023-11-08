@@ -4,9 +4,8 @@ import Footer from '../components/Footer';
 import AboutUs from '../components/AboutUs';
 import ContactUs from '../components/ContactUs';
 import '../styles/HomePage.css';
-import logo from '../assets/images/logo.png';
-import questionMmark from '../assets/images/question-mark.png';
 import heroImg from '../assets/images/construction-1.jpg';
+import heroImg1 from '../assets/images/hero.jpg';
 
 
 export default function HomePage() {
@@ -15,15 +14,10 @@ export default function HomePage() {
       <Header />
       <div className="home-container">
         <main className="main-content">
+          <div className='hero-image'>
+              <img className='hero' src={heroImg1} alt='heroImg1' />
+          </div>
           <section className="description">
-            <div className='why'>
-              <img src={logo} alt="CAD Marketplace Logo" />
-              <div className='why-text'>
-                <h2 className='part1'>Why Addis</h2><h2 className='part2'>CAD Marketplace</h2>
-                <img className='question-mark' src={questionMmark} alt='question-mark' />
-              </div>
-
-            </div>
             <h4>
               Choose our marketplace because we're the architects of convenience. We bring your CAD needs to life with a seamless platform, connecting you to top-notch designers and engineers. Simplify your projects, accelerate your progress, and experience precision like never before.
             </h4>

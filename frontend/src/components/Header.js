@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../actions/auth';
 import logo from '../assets/images/logo.png';
+import { connect } from 'react-redux';
 
-export default function Header({ is_active , username }) {
+function Header({ is_active , ...props }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
@@ -46,3 +47,10 @@ export default function Header({ is_active , username }) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps)(Header);

@@ -1,6 +1,6 @@
 .header-container {
   background-color: rgba(1, 19, 20, 0.7);
-  padding: 5px;
+  padding: 10px;
   color: white;
 }
 
@@ -8,57 +8,79 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  font-size: 18px;
+  font-size: 2rem;
   font-weight: bold;
-}
-
-.logo a {
-  text-decoration: none;
-  color: #333;
+  margin-bottom: 10px;
 }
 
 .logo img {
-  width: 80px;
+  width: 100px;
+  height: auto;
+  margin-right: 10px;
 }
 
 div.auth-buttons button {
-  margin-left: 10px;
-  padding: 8px 16px;
+  margin: 0 10px;
+  padding: 10px 20px;
   background-color: #f1f0f0;
   border: 1px solid #080808;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 1rem;
   cursor: pointer;
-  margin: 0 10px;
 }
-#root > div > div.header-container > header > div.logo > h2 {
+
+@media (max-width: 768px) {
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .logo img {
+    width: 80px;
+  }
+
+  div.auth-buttons button {
+    margin: 0 5px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+  }
+}
+
+
+#root > div.App > div.header-container > header > div.logo > h2 {
   color: #f1f0f0;
   font-family: Montserrat;
   font-weight: normal;
   font-size: 1.8rem;
 }
-#root > div > div.header-container > header > div.auth-buttons > button.login-button > a {
-  text-decoration: none;
-}
-#root > div > div.header-container > header > div.auth-buttons > button > a {
-  text-decoration: none;
-  color: #333;
-}
 
-div.auth-buttons button:hover {
-  background-color: #707070;
-  color:#f2f2f2;
-}
 
-#root > div.App > div > div.header-container > header > div.logo > h2 {
-  color: #f1f0f0;
-  font-family: Montserrat;
-  font-weight: normal;
-  font-size: 1.8rem;
+@media (max-width: 480px) {
+  .logo {
+    font-size: 1rem;
+  }
+
+  .logo img {
+    width: 40px;
+    margin: 2px;
+  }
+
+  #root > div.App > div.header-container > header > div.logo > h2 {
+    font-size: .7rem;
+  }
+
+  
+
+  div.auth-buttons button {
+    margin: 0 2px;
+    padding: 4px 8px;
+    font-size: .4rem;
+    border-radius: 5px;
+  }
 }
 
