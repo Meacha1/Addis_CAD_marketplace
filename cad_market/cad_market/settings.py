@@ -159,13 +159,25 @@ WSGI_APPLICATION = 'cad_market.wsgi.application'
 #        }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'umwqnwyt',
+#         'USER': 'umwqnwyt',
+#         'PASSWORD': 'D8vGbpPj25UpEr7nKJzSJYaG5ReZ_tgz',
+#         'HOST': 'rosie.db.elephantsql.com',
+#         'PORT': '5432',
+#         'CONN_MAX_AGE': 60,  # Connection timeout in seconds (optional)
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'umwqnwyt',
-        'USER': 'umwqnwyt',
-        'PASSWORD': 'D8vGbpPj25UpEr7nKJzSJYaG5ReZ_tgz',
-        'HOST': 'rosie.db.elephantsql.com',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'pSS5iy9tdEi%Xn#',
+        'HOST': 'db.fusihvllrsclfgnjydek.supabase.co',
         'PORT': '5432',
         'CONN_MAX_AGE': 60,  # Connection timeout in seconds (optional)
     }
