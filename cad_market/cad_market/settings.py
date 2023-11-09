@@ -58,12 +58,11 @@ INSTALLED_APPS = [
     'cloudinary_storage',
 ]
 
-
 # Cloudinary stuff
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dmkoxsf2t',
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    'API_KEY': '381363345293482',
+    'API_SECRET': 'c3kuHWyxSFeRSfy4UoDNNBg6voQ',
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
@@ -172,29 +171,31 @@ WSGI_APPLICATION = 'cad_market.wsgi.application'
 #     }
 # }
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'pSS5iy9tdEi%Xn#',
+        'HOST': 'db.fusihvllrsclfgnjydek.supabase.co',
         'PORT': '5432',
         'CONN_MAX_AGE': 60,  # Connection timeout in seconds (optional)
     }
 }
 
 
+
+
 # Tell Django to use the test database when running tests
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'meachattd@gmail.com'
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = 'uvuefizmrjtwmbnd'
 EMAIL_USE_TLS = True
 EMAIL_TIMEOUT = 60 # seconds
 
